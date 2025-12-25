@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" aria-hidden="true">
+  <rect width="128" height="128" fill="#ffffff" />
+  <path
+    d="M34 44h26v40H34zm34 0h26v40H68z"
+    fill="#111111"
+  />
+  <path
+    d="M34 44h60v18H34zm0 22h60v18H34z"
+    fill="#111111"
+  />
+  <rect x="48" y="30" width="32" height="68" fill="#ffffff" />
+  <rect x="30" y="48" width="68" height="32" fill="#ffffff" />
+</svg>
