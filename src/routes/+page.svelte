@@ -1,5 +1,6 @@
 <script lang="ts">
   import { base } from "$app/paths";
+  import { onMount } from "svelte";
 
   const cards = [
     {
@@ -8,24 +9,216 @@
       href: "/games"
     }
   ];
+
+  type Node = {
+    x: number;
+    y: number;
+    vx: number;
+    vy: number;
+    baseX: number;
+    baseY: number;
+    baseVx: number;
+    baseVy: number;
+    phase: number;
+    orbit: number;
+  };
+
+  let canvas: HTMLCanvasElement | null = null;
+
+  onMount(() => {
+    if (!canvas) {
+      return;
+    }
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) {
+      return;
+    }
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const pointer = { x: 0, y: 0, active: false };
+    let nodes: Node[] = [];
+    let width = 0;
+    let height = 0;
+    let rafId = 0;
+
+    const createNodes = (count: number) => {
+      nodes = Array.from({ length: count }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: 0,
+        vy: 0,
+        baseX: Math.random() * width,
+        baseY: Math.random() * height,
+        baseVx: (Math.random() - 0.5) * 0.35,
+        baseVy: (Math.random() - 0.5) * 0.35,
+        phase: Math.random() * Math.PI * 2,
+        orbit: 10 + Math.random() * 26
+      }));
+    };
+
+    const resize = () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const count = Math.min(90, Math.max(45, Math.round((width * height) / 24000)));
+      createNodes(count);
+      drawFrame(performance.now(), true);
+    };
+
+    const updatePointer = (event: PointerEvent) => {
+      pointer.x = event.clientX;
+      pointer.y = event.clientY;
+      pointer.active = true;
+    };
+
+    const clearPointer = () => {
+      pointer.active = false;
+    };
+
+    const drawLines = (maxDistance: number) => {
+      for (let i = 0; i < nodes.length; i += 1) {
+        const a = nodes[i];
+        for (let j = i + 1; j < nodes.length; j += 1) {
+          const b = nodes[j];
+          const dx = a.x - b.x;
+          const dy = a.y - b.y;
+          const dist = Math.hypot(dx, dy);
+          if (dist > maxDistance) {
+            continue;
+          }
+          const alpha = (1 - dist / maxDistance) * 0.2;
+          ctx.strokeStyle = `rgba(60, 56, 76, ${alpha})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+        }
+      }
+    };
+
+    const drawDots = () => {
+      ctx.fillStyle = "rgba(60, 56, 76, 0.45)";
+      nodes.forEach((node) => {
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, 2.2, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    };
+
+    const drawFrame = (time: number, isStatic = false) => {
+      ctx.clearRect(0, 0, width, height);
+
+      const influenceRadius = 140;
+      nodes.forEach((node) => {
+        node.baseX += node.baseVx;
+        node.baseY += node.baseVy;
+
+        if (node.baseX < -40 || node.baseX > width + 40) {
+          node.baseVx *= -1;
+        }
+
+        if (node.baseY < -40 || node.baseY > height + 40) {
+          node.baseVy *= -1;
+        }
+
+        const driftX = Math.cos(time * 0.0003 + node.phase) * node.orbit;
+        const driftY = Math.sin(time * 0.00028 + node.phase) * node.orbit;
+        const targetX = node.baseX + driftX;
+        const targetY = node.baseY + driftY;
+
+        node.vx += (targetX - node.x) * 0.02;
+        node.vy += (targetY - node.y) * 0.02;
+
+        if (pointer.active) {
+          const dx = node.x - pointer.x;
+          const dy = node.y - pointer.y;
+          const dist = Math.hypot(dx, dy);
+          if (dist < influenceRadius && dist > 0.001) {
+            const force = (1 - dist / influenceRadius) * 0.8;
+            node.vx += (dx / dist) * force;
+            node.vy += (dy / dist) * force;
+          }
+        }
+
+        node.vx *= 0.9;
+        node.vy *= 0.9;
+        node.x += node.vx;
+        node.y += node.vy;
+      });
+
+      drawLines(140);
+      drawDots();
+
+      if (!isStatic) {
+        rafId = window.requestAnimationFrame(drawFrame);
+      }
+    };
+
+    resize();
+
+    if (!prefersReducedMotion.matches) {
+      rafId = window.requestAnimationFrame(drawFrame);
+      window.addEventListener("pointermove", updatePointer, { passive: true });
+      window.addEventListener("pointerdown", updatePointer, { passive: true });
+      window.addEventListener("pointerleave", clearPointer, { passive: true });
+      window.addEventListener("pointerout", clearPointer, { passive: true });
+    }
+
+    window.addEventListener("resize", resize);
+
+    return () => {
+      window.removeEventListener("resize", resize);
+      window.removeEventListener("pointermove", updatePointer);
+      window.removeEventListener("pointerdown", updatePointer);
+      window.removeEventListener("pointerleave", clearPointer);
+      window.removeEventListener("pointerout", clearPointer);
+      window.cancelAnimationFrame(rafId);
+    };
+  });
 </script>
+
+<canvas class="ambient-canvas" bind:this={canvas} aria-hidden="true"></canvas>
+
+<svelte:head>
+  <title>Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,700&display=swap"
+    rel="stylesheet"
+  />
+</svelte:head>
 
 <div class="home-stack">
   <section class="hero">
-    <img
-      class="avatar"
-      src="{base}/philip-face.png"
-      alt="Philip Knott"
-      width="200"
-      height="200"
-    />
-    <h2>Philip Knott</h2>
+    <div class="portrait-wrap">
+      <img
+        class="avatar"
+        src="{base}/philip-face.png"
+        alt="Philip Knott"
+        width="200"
+        height="200"
+      />
+      <span class="orbit"></span>
+    </div>
+    <div class="hero-text">
+      <p class="eyebrow">Hello, I am</p>
+      <h2>Philip Knott</h2>
+      <p class="subhead">Software developer.</p>
+    </div>
   </section>
 
   <section class="cards">
     {#each cards as card}
       <a class="card" href="{base}{card.href}">
-        <div>
+        <div class="card-text">
           <h3>{card.title}</h3>
           <p>{card.description}</p>
         </div>
@@ -37,35 +230,93 @@
 
 <style>
   .home-stack {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    width: min(520px, 100%);
-    gap: 2rem;
+    align-items: stretch;
+    width: min(820px, 100%);
+    gap: 2.5rem;
+    font-family: "Space Grotesk", system-ui, sans-serif;
+  }
+
+  .ambient-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
   }
 
   .hero {
     display: grid;
+    grid-template-columns: minmax(0, 240px) minmax(0, 1fr);
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    align-items: center;
+    padding: 0.25rem 0;
+  }
+
+  .portrait-wrap {
+    position: relative;
+    width: min(220px, 100%);
+    aspect-ratio: 1 / 1;
+    margin: 0 auto;
+    display: grid;
     place-items: center;
-    gap: 1.5rem;
-    text-align: center;
   }
 
   .avatar {
-    width: 200px;
-    height: 200px;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     border-radius: 999px;
+    border: 6px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 18px 40px rgba(32, 27, 47, 0.12);
+  }
+
+  .orbit {
+    position: absolute;
+    inset: -12px;
+    border-radius: 999px;
+    border: 1px dashed rgba(32, 27, 47, 0.18);
+    opacity: 0.7;
+    animation: orbit-spin 18s linear infinite;
+  }
+
+  .hero-text {
+    display: grid;
+    gap: 0.75rem;
   }
 
   h2 {
     margin: 0;
+    font-family: "Source Serif 4", "Times New Roman", serif;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    color: #1f1b2e;
+  }
+
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #5e4b7a;
+    margin: 0;
+  }
+
+  .subhead {
+    margin: 0;
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    color: #4b425c;
+    line-height: 1.6;
   }
 
   .cards {
     display: grid;
     gap: 1rem;
     width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   }
 
   .card {
@@ -73,13 +324,13 @@
     align-items: center;
     justify-content: space-between;
     gap: 1.5rem;
-    padding: 1.25rem 1.5rem;
-    border-radius: 18px;
-    border: 1px solid rgba(32, 27, 47, 0.12);
-    background: #fff;
+    padding: 1.35rem 1.6rem;
+    border-radius: 20px;
+    border: 1px solid rgba(32, 27, 47, 0.1);
+    background: rgba(255, 255, 255, 0.9);
     text-decoration: none;
     color: inherit;
-    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.08);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
 
@@ -100,5 +351,25 @@
 
   .card-arrow {
     font-size: 1.5rem;
+  }
+
+  @keyframes orbit-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (max-width: 720px) {
+    .hero {
+      grid-template-columns: minmax(0, 1fr);
+      text-align: center;
+    }
+
+    .hero-text {
+      text-align: center;
+    }
   }
 </style>
