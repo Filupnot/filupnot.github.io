@@ -11,6 +11,18 @@
       pathname.startsWith(`${base}/games/`)
     );
   };
+
+  const isGamesIndexPath = (pathname: string) => {
+    return pathname === "/games" || pathname === `${base}/games`;
+  };
+
+  const isGamesSubpath = (pathname: string) => {
+    return isGamesPath(pathname) && !isGamesIndexPath(pathname);
+  };
+
+  const isHomePath = (pathname: string) => {
+    return pathname === "/" || pathname === base || pathname === `${base}/`;
+  };
 </script>
 
 <svelte:head>
@@ -28,15 +40,12 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 </svelte:head>
 
-<main class="page">
-  <header class="site-header">
-    <nav class="nav">
-      <a href="{base}/">Home</a>
-      <a href="{base}/games">Games</a>
-      <a href="{base}/about">About</a>
-    </nav>
-  </header>
-
+<main
+  class="page"
+  class:top-content={isGamesIndexPath($page.url.pathname)}
+  class:center-content={isGamesSubpath($page.url.pathname)}
+  class:top-centered-content={isHomePath($page.url.pathname)}
+>
   <section class="content">
     <slot />
   </section>
@@ -50,11 +59,6 @@
     flex-direction: column;
   }
 
-  .site-header {
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid #ddd;
-  }
-
   .content {
     flex: 1;
     display: flex;
@@ -63,16 +67,22 @@
     padding: 2rem 1.5rem;
   }
 
-  .nav {
-    display: flex;
-    gap: 1rem;
+  .top-content .content {
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .top-centered-content .content {
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .center-content .content {
+    align-items: center;
+    justify-content: center;
   }
 
   @media (max-width: 720px) {
-    .site-header {
-      padding: 0.75rem 1rem;
-    }
-
     .content {
       padding: 1.5rem 1rem;
     }

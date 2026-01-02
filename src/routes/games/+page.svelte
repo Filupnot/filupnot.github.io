@@ -124,6 +124,7 @@
 </svelte:head>
 
 <section class="games-page">
+  <a class="breadcrumb" href="{base}/">← Home</a>
   <header class="page-hero">
     <p class="eyebrow">Games</p>
     <h1>Score trackers.</h1>
@@ -170,10 +171,6 @@
 {/if}
 
 <style>
-  :global(.site-header) {
-    display: none;
-  }
-
   :global(body) {
     background: radial-gradient(circle at top, #f8f4ff 0%, #f1f5f8 45%, #f7efe3 100%);
   }
@@ -185,6 +182,17 @@
     gap: 2.5rem;
     font-family: "Space Grotesk", system-ui, sans-serif;
     color: #201b2f;
+  }
+
+  .breadcrumb {
+    text-decoration: none;
+    color: #4b425c;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .breadcrumb:hover {
+    color: #2c2438;
   }
 
   .page-hero {

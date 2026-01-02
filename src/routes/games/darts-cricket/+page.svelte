@@ -106,11 +106,7 @@
 </svelte:head>
 
 <section class="cricket-page">
-  <nav class="breadcrumb" aria-label="Breadcrumb">
-    <a class="crumb-link" href="{base}/games">Games</a>
-    <span class="crumb-sep">/</span>
-    <span class="crumb-current">Darts</span>
-  </nav>
+  <a class="breadcrumb" href="{base}/games">← Games</a>
   <div class="board">
     <div class="board-head">
       <button
@@ -220,27 +216,14 @@
   }
 
   .breadcrumb {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: #6b6458;
-  }
-
-  .crumb-link {
     text-decoration: none;
-    color: inherit;
+    color: #4b425c;
     font-weight: 600;
+    font-size: 0.9rem;
   }
 
-  .crumb-sep {
-    opacity: 0.6;
-  }
-
-  .crumb-current {
-    font-weight: 700;
+  .breadcrumb:hover {
+    color: #2c2438;
   }
 
   .board-head {
