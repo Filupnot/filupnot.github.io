@@ -3,6 +3,14 @@
   import { base } from "$app/paths";
   import { page } from "$app/stores";
 
+  const isGamesPath = (pathname: string) => {
+    return (
+      pathname === "/games" ||
+      pathname.startsWith("/games/") ||
+      pathname === `${base}/games` ||
+      pathname.startsWith(`${base}/games/`)
+    );
+  };
 </script>
 
 <svelte:head>
@@ -10,7 +18,7 @@
   <link rel="icon" href="{base}/icons/icon-32.png" sizes="32x32" type="image/png" />
   <link rel="icon" href="{base}/icons/icon-16.png" sizes="16x16" type="image/png" />
   <link rel="apple-touch-icon" href="{base}/icons/apple-touch-icon.png" sizes="180x180" />
-  {#if $page.url.pathname === `${base}/games` || $page.url.pathname.startsWith(`${base}/games/`)}
+  {#if isGamesPath($page.url.pathname)}
     <link rel="manifest" href="{base}/manifest-games.json" />
   {:else}
     <link rel="manifest" href="{base}/manifest.json" />
