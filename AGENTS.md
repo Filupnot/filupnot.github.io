@@ -12,10 +12,12 @@ If you introduce a framework, follow its defaults (for example, Next.js uses `ap
 
 ## Build, Test, and Development Commands
 
-No build or test tooling is configured yet. When you add automation, define it in the project root (for example, `package.json` scripts or a `Makefile`) and keep commands consistent:
+Build and test tooling is configured in `package.json` scripts:
 - `npm run dev` for local development
 - `npm run build` for production builds
 - `npm test` for the full test suite
+- `npm run test:unit` for unit tests (Vitest)
+- `npm run test:integration` for integration tests (Playwright)
 
 Update this section when those commands exist.
 

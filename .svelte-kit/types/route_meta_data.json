@@ -5,5 +5,11 @@
 	],
 	"/about": [
 		"src/routes/+layout.ts"
+	],
+	"/games": [
+		"src/routes/+layout.ts"
+	],
+	"/games/darts-cricket": [
+		"src/routes/+layout.ts"
 	]
 }

@@ -27,16 +27,18 @@ export {};
 
 declare module "$app/types" {
 	export interface AppTypes {
-		RouteId(): "/" | "/about";
+		RouteId(): "/" | "/about" | "/games" | "/games/darts-cricket";
 		RouteParams(): {
 			
 		};
 		LayoutParams(): {
 			"/": Record<string, never>;
-			"/about": Record<string, never>
+			"/about": Record<string, never>;
+			"/games": Record<string, never>;
+			"/games/darts-cricket": Record<string, never>
 		};
-		Pathname(): "/" | "/about" | "/about/";
+		Pathname(): "/" | "/about" | "/about/" | "/games" | "/games/" | "/games/darts-cricket" | "/games/darts-cricket/";
 		ResolvedPathname(): `${"" | `/${string}`}${ReturnType<AppTypes['Pathname']>}`;
-		Asset(): "/favicon.svg" | "/philip-face.png" | string & {};
+		Asset(): "/.DS_Store" | "/cricket-one.png" | "/cricket-three.png" | "/cricket-two.png" | "/darts-thumb.svg" | "/favicon.svg" | "/philip-face.png" | string & {};
 	}
 }
