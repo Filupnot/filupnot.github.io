@@ -11,5 +11,8 @@
 	],
 	"/games/darts-cricket": [
 		"src/routes/+layout.ts"
+	],
+	"/games/dominoes": [
+		"src/routes/+layout.ts"
 	]
 }

@@ -6,6 +6,11 @@
       title: "Darts (Cricket)",
       path: "/games/darts-cricket",
       thumbnail: "/darts-thumb.png"
+    },
+    {
+      title: "Dominoes",
+      path: "/games/dominoes",
+      thumbnail: "/dominoes-thumb.svg"
     }
   ];
 </script>
