@@ -1,6 +1,6 @@
 {
-  "name": "Scorecards",
-  "short_name": "Scorecards",
+  "name": "Game Score Tools",
+  "short_name": "Game Score Tools",
   "start_url": ".",
   "scope": ".",
   "display": "standalone",

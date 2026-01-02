@@ -114,7 +114,7 @@
 </script>
 
 <svelte:head>
-  <title>Games</title>
+  <title>Game Score Tools</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -126,9 +126,9 @@
 <section class="games-page">
   <a class="breadcrumb" href="{base}/">← Home</a>
   <header class="page-hero">
-    <p class="eyebrow">Games</p>
-    <h1>Score trackers.</h1>
-    <p class="subhead">Tap a tile to start tracking.</p>
+    <p class="eyebrow">Game Score Tools</p>
+    <h1>Game score tracking.</h1>
+    <p class="subhead">Pick a game to open its score tool.</p>
   </header>
 
   <div class="games-grid">

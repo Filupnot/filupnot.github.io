@@ -4,8 +4,8 @@
 
   const cards = [
     {
-      title: "Games",
-      description: "Score trackers for different games.",
+      title: "Game Score Tools",
+      description: "Simple score tracking tools for games.",
       href: "/games"
     }
   ];

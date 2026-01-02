@@ -106,7 +106,7 @@
 </svelte:head>
 
 <section class="cricket-page">
-  <a class="breadcrumb" href="{base}/games">← Games</a>
+  <a class="breadcrumb" href="{base}/games">← Game Score Tools</a>
   <div class="board">
     <div class="board-head">
       <button
