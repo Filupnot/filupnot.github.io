@@ -114,6 +114,11 @@
       title: "Dominoes",
       path: "/games/dominoes",
       thumbnail: "/dominoes-thumb.svg"
+    },
+    {
+      title: "Pool League",
+      path: "/games/8-ball-pool",
+      thumbnail: "/pool-thumb.svg"
     }
   ];
 </script>
