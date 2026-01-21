@@ -178,10 +178,28 @@
 </section>
 
 <style>
-  :global(body) {
-    margin: 0;
-    background: radial-gradient(circle at top, #f2efe8 0%, #e5edf2 45%, #f7f4ee 100%);
-    touch-action: manipulation;
+  :global(:root) {
+    --app-bg: radial-gradient(circle at top, #f2efe8 0%, #e5edf2 45%, #f7f4ee 100%);
+    --app-text: #1b1a17;
+    --app-muted: #4b425c;
+    --app-card-bg: #ffffff;
+    --app-panel-bg: #f0ece3;
+    --app-panel-muted: #f5f8fb;
+    --app-chip-bg: #f7f2e6;
+    --app-chip-border: rgba(27, 26, 23, 0.15);
+    --app-border: rgba(27, 26, 23, 0.08);
+  }
+
+  :global(:root[data-theme="dark"]) {
+    --app-bg: radial-gradient(circle at top, #12161c 0%, #1a2028 45%, #1f2530 100%);
+    --app-text: #f0f1f4;
+    --app-muted: #b3b6c2;
+    --app-card-bg: #1c222c;
+    --app-panel-bg: #242a35;
+    --app-panel-muted: #202633;
+    --app-chip-bg: #232a35;
+    --app-chip-border: rgba(240, 241, 244, 0.18);
+    --app-border: rgba(240, 241, 244, 0.12);
   }
 
   .cricket-page {
@@ -191,9 +209,15 @@
     flex-direction: column;
     gap: 1rem;
     font-family: "Space Grotesk", system-ui, sans-serif;
-    color: #1b1a17;
+    color: var(--app-text);
     touch-action: manipulation;
     align-items: center;
+  }
+
+  :global(body) {
+    margin: 0;
+    background: var(--app-bg);
+    touch-action: manipulation;
   }
 
   :global(.site-header) {
@@ -201,13 +225,13 @@
   }
 
   .board {
-    background: #ffffff;
+    background: var(--app-card-bg);
     border-radius: 28px;
     padding: 30px;
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
-    border: 1px solid rgba(27, 26, 23, 0.08);
+    border: 1px solid var(--app-border);
     box-shadow: 0 30px 60px rgba(27, 26, 23, 0.12);
     width: 100%;
     max-width: 540px;
@@ -217,13 +241,13 @@
 
   .breadcrumb {
     text-decoration: none;
-    color: #4b425c;
+    color: var(--app-muted);
     font-weight: 600;
     font-size: 0.9rem;
   }
 
   .breadcrumb:hover {
-    color: #2c2438;
+    color: var(--app-text);
   }
 
   .board-head {
@@ -243,9 +267,9 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
     font-size: 0.7rem;
-    background: #f7f2e6;
-    color: #1b1a17;
-    box-shadow: inset 0 0 0 2px rgba(27, 26, 23, 0.15);
+    background: var(--app-chip-bg);
+    color: var(--app-text);
+    box-shadow: inset 0 0 0 2px var(--app-chip-border);
     min-width: 0;
   }
 
@@ -261,7 +285,7 @@
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 0.2em;
-    color: #746f63;
+    color: var(--app-muted);
     flex: 0 0 64px;
   }
 
@@ -281,7 +305,7 @@
 
   .target-cell {
     border-radius: 18px;
-    background: #f0ece3;
+    background: var(--app-panel-bg);
     padding: 0.6rem 0.5rem;
     text-align: center;
     font-weight: 700;
@@ -293,8 +317,8 @@
   .mark-cell {
     border-radius: 18px;
     min-height: 50px;
-    border: 1px solid rgba(27, 26, 23, 0.18);
-    background: #f5f8fb;
+    border: 1px solid var(--app-border);
+    background: var(--app-panel-muted);
     display: grid;
     place-items: center;
     touch-action: manipulation;

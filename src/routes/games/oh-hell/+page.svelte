@@ -461,9 +461,59 @@
 </section>
 
 <style>
+  :global(:root) {
+    --app-bg: radial-gradient(circle at top, #f0f3f7 0%, #f7efe5 45%, #f1f6f1 100%);
+    --app-text: #1b1a17;
+    --app-muted: #4b425c;
+    --app-accent: #5e4b7a;
+    --app-card-bg: #ffffff;
+    --app-card-border: rgba(27, 26, 23, 0.08);
+    --app-panel-bg: #fffaf3;
+    --app-panel-border: rgba(27, 26, 23, 0.12);
+    --app-chip-bg: #f0ece3;
+    --app-chip-text: #1b1a17;
+    --app-input-bg: #ffffff;
+    --app-input-border: rgba(27, 26, 23, 0.12);
+    --app-ghost-bg: #f5f8fb;
+    --app-primary-bg: #1b1a17;
+    --app-primary-text: #fffaf3;
+    --app-label: #6a5d4c;
+    --app-row-bg: #f7f2e6;
+    --app-row-border: rgba(27, 26, 23, 0.08);
+    --app-bet: #2c2438;
+    --app-made: #1b3a2a;
+    --app-result: #6a2b2b;
+    --app-reset: #c3392b;
+  }
+
+  :global(:root[data-theme="dark"]) {
+    --app-bg: radial-gradient(circle at top, #131821 0%, #171c25 45%, #1c2230 100%);
+    --app-text: #f0f1f4;
+    --app-muted: #b3b6c2;
+    --app-accent: #d6c3ff;
+    --app-card-bg: #1c222c;
+    --app-card-border: rgba(240, 241, 244, 0.12);
+    --app-panel-bg: #202633;
+    --app-panel-border: rgba(240, 241, 244, 0.12);
+    --app-chip-bg: #252c38;
+    --app-chip-text: #f0f1f4;
+    --app-input-bg: #1a202a;
+    --app-input-border: rgba(240, 241, 244, 0.18);
+    --app-ghost-bg: #1a212c;
+    --app-primary-bg: #f0f1f4;
+    --app-primary-text: #111319;
+    --app-label: #b4b7c4;
+    --app-row-bg: #202633;
+    --app-row-border: rgba(240, 241, 244, 0.12);
+    --app-bet: #d6c3ff;
+    --app-made: #8fe0b4;
+    --app-result: #ff9c9c;
+    --app-reset: #ff6f61;
+  }
+
   :global(html, body) {
     margin: 0;
-    background: radial-gradient(circle at top, #f0f3f7 0%, #f7efe5 45%, #f1f6f1 100%);
+    background: var(--app-bg);
     overflow-y: auto !important;
     overflow-x: hidden !important;
     touch-action: manipulation;
@@ -480,30 +530,30 @@
     flex-direction: column;
     gap: 1rem;
     font-family: "Space Grotesk", system-ui, sans-serif;
-    color: #1b1a17;
+    color: var(--app-text);
     align-items: center;
     width: min(1100px, 100%);
   }
 
   .breadcrumb {
     text-decoration: none;
-    color: #4b425c;
+    color: var(--app-muted);
     font-weight: 600;
     font-size: 0.9rem;
   }
 
   .breadcrumb:hover {
-    color: #2c2438;
+    color: var(--app-text);
   }
 
   .board {
-    background: #ffffff;
+    background: var(--app-card-bg);
     border-radius: 28px;
     padding: 30px;
     display: flex;
     flex-direction: column;
     gap: 1.3rem;
-    border: 1px solid rgba(27, 26, 23, 0.08);
+    border: 1px solid var(--app-card-border);
     box-shadow: 0 30px 60px rgba(27, 26, 23, 0.12);
     width: 100%;
   }
@@ -520,7 +570,7 @@
     letter-spacing: 0.2em;
     font-size: 0.7rem;
     font-weight: 600;
-    color: #5e4b7a;
+    color: var(--app-accent);
     margin: 0 0 0.4rem 0;
   }
 
@@ -546,7 +596,7 @@
 
   .subhead {
     margin: 0;
-    color: #4b425c;
+    color: var(--app-muted);
     font-size: 1rem;
   }
 
@@ -558,8 +608,8 @@
 
   .setup-card {
     border-radius: 20px;
-    border: 1px solid rgba(27, 26, 23, 0.12);
-    background: #fffaf3;
+    border: 1px solid var(--app-panel-border);
+    background: var(--app-panel-bg);
     padding: 1.1rem;
     display: grid;
     gap: 0.9rem;
@@ -572,7 +622,7 @@
 
   .hint {
     margin: -0.3rem 0 0 0;
-    color: #5f5964;
+    color: var(--app-muted);
     font-size: 0.85rem;
   }
 
@@ -592,7 +642,8 @@
     width: 28px;
     height: 28px;
     border-radius: 10px;
-    background: #f0ece3;
+    background: var(--app-chip-bg);
+    color: var(--app-chip-text);
     display: grid;
     place-items: center;
     font-weight: 700;
@@ -601,11 +652,12 @@
 
   .player-input {
     border-radius: 12px;
-    border: 1px solid rgba(27, 26, 23, 0.12);
+    border: 1px solid var(--app-input-border);
     padding: 0.45rem 0.6rem;
     font-weight: 600;
     text-transform: uppercase;
-    background: #ffffff;
+    background: var(--app-input-bg);
+    color: var(--app-text);
   }
 
   .player-actions {
@@ -615,12 +667,13 @@
 
   .ghost-button {
     border-radius: 999px;
-    border: 1px solid rgba(27, 26, 23, 0.18);
-    background: #f5f8fb;
+    border: 1px solid var(--app-input-border);
+    background: var(--app-ghost-bg);
     padding: 0.4rem 0.9rem;
     font-weight: 600;
     font-size: 0.85rem;
     cursor: pointer;
+    color: var(--app-text);
   }
 
   .ghost-compact {
@@ -636,8 +689,8 @@
   .primary-button {
     border-radius: 999px;
     border: none;
-    background: #1b1a17;
-    color: #fffaf3;
+    background: var(--app-primary-bg);
+    color: var(--app-primary-text);
     padding: 0.55rem 1.1rem;
     font-weight: 600;
     font-size: 0.9rem;
@@ -676,9 +729,10 @@
   .control select {
     border-radius: 10px;
     padding: 0.3rem 0.6rem;
-    border: 1px solid rgba(27, 26, 23, 0.2);
-    background: #fff;
+    border: 1px solid var(--app-input-border);
+    background: var(--app-input-bg);
     font-weight: 600;
+    color: var(--app-text);
   }
 
   .toggle {
@@ -693,7 +747,7 @@
     flex-direction: column;
     gap: 0.25rem;
     font-size: 0.85rem;
-    color: #5f5964;
+    color: var(--app-muted);
   }
 
   .round-list {
@@ -726,7 +780,7 @@
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.18em;
-    color: #6a5d4c;
+    color: var(--app-label);
     text-align: center;
   }
 
@@ -745,10 +799,10 @@
     grid-template-columns: minmax(90px, 1.2fr) repeat(3, minmax(90px, 1fr));
     gap: 0.8rem;
     align-items: center;
-    background: #f7f2e6;
+    background: var(--app-row-bg);
     border-radius: 16px;
     padding: 0.6rem 0.8rem;
-    border: 1px solid rgba(27, 26, 23, 0.08);
+    border: 1px solid var(--app-row-border);
   }
 
   .player-name {
@@ -764,7 +818,7 @@
   .total-badge {
     border-radius: 999px;
     padding: 0.2rem 0.6rem;
-    background: #f7f2e6;
+    background: var(--app-row-bg);
     font-size: 1rem;
     min-width: 120px;
     text-align: center;
@@ -782,15 +836,15 @@
   }
 
   .stat-bet {
-    color: #2c2438;
+    color: var(--app-bet);
   }
 
   .stat-made {
-    color: #1b3a2a;
+    color: var(--app-made);
   }
 
   .stat-result {
-    color: #6a2b2b;
+    color: var(--app-result);
   }
 
   .stat-placeholder {
@@ -801,8 +855,8 @@
     width: 100%;
     height: 44px;
     border-radius: 12px;
-    border: 1px solid rgba(27, 26, 23, 0.18);
-    background: #ffffff;
+    border: 1px solid var(--app-input-border);
+    background: var(--app-input-bg);
     text-align: center;
     font-weight: 700;
     padding: 0.35rem 0.2rem;
@@ -818,7 +872,7 @@
 
   .stat-locked .stat-input {
     background: transparent;
-    color: rgba(27, 26, 23, 0.6);
+    color: var(--app-muted);
     border-color: transparent;
   }
 
@@ -826,7 +880,7 @@
     border-radius: 14px;
     height: 44px;
     padding: 0.4rem 0.6rem;
-    background: #ffffff;
+    background: var(--app-input-bg);
     font-weight: 700;
     font-size: 1.4rem;
     text-align: center;
@@ -850,7 +904,7 @@
   .reset-text {
     border: none;
     background: transparent;
-    color: #c3392b;
+    color: var(--app-reset);
     font-weight: 700;
     letter-spacing: 0.2em;
     text-transform: uppercase;

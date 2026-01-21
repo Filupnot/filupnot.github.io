@@ -41,6 +41,16 @@
     let width = 0;
     let height = 0;
     let rafId = 0;
+    const colors = { line: "rgba(60, 56, 76, 0.2)", dot: "rgba(60, 56, 76, 0.45)" };
+    let themeObserver: MutationObserver | null = null;
+
+    const syncThemeColors = () => {
+      const styles = getComputedStyle(document.documentElement);
+      const line = styles.getPropertyValue("--home-line").trim();
+      const dot = styles.getPropertyValue("--home-dot").trim();
+      if (line) colors.line = line;
+      if (dot) colors.dot = dot;
+    };
 
     const createNodes = (count: number) => {
       nodes = Array.from({ length: count }, () => ({
@@ -93,7 +103,8 @@
             continue;
           }
           const alpha = (1 - dist / maxDistance) * 0.2;
-          ctx.strokeStyle = `rgba(60, 56, 76, ${alpha})`;
+          const lineColor = colors.line.replace("ALPHA", alpha.toFixed(3));
+          ctx.strokeStyle = lineColor.includes("ALPHA") ? `rgba(60, 56, 76, ${alpha})` : lineColor;
           ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.moveTo(a.x, a.y);
@@ -104,7 +115,7 @@
     };
 
     const drawDots = () => {
-      ctx.fillStyle = "rgba(60, 56, 76, 0.45)";
+      ctx.fillStyle = colors.dot;
       nodes.forEach((node) => {
         ctx.beginPath();
         ctx.arc(node.x, node.y, 2.2, 0, Math.PI * 2);
@@ -161,6 +172,7 @@
       }
     };
 
+    syncThemeColors();
     resize();
 
     if (!prefersReducedMotion.matches) {
@@ -171,6 +183,12 @@
       window.addEventListener("pointerout", clearPointer, { passive: true });
     }
 
+    themeObserver = new MutationObserver(() => {
+      syncThemeColors();
+      drawFrame(performance.now(), true);
+    });
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
     window.addEventListener("resize", resize);
 
     return () => {
@@ -180,6 +198,7 @@
       window.removeEventListener("pointerleave", clearPointer);
       window.removeEventListener("pointerout", clearPointer);
       window.cancelAnimationFrame(rafId);
+      themeObserver?.disconnect();
     };
   });
 </script>
@@ -251,8 +270,28 @@
 </footer>
 
 <style>
-  :global(body) {
-    background: radial-gradient(circle at top, #f2efe8 0%, #e5edf2 45%, #f7f4ee 100%);
+  :global(:root) {
+    --app-bg: radial-gradient(circle at top, #f2efe8 0%, #e5edf2 45%, #f7f4ee 100%);
+    --app-text: #1f1b2e;
+    --app-muted: #4b425c;
+    --app-accent: #5e4b7a;
+    --app-card-bg: rgba(255, 255, 255, 0.9);
+    --app-card-border: rgba(32, 27, 47, 0.1);
+    --app-card-shadow: 0 18px 36px rgba(0, 0, 0, 0.08);
+    --home-line: rgba(60, 56, 76, ALPHA);
+    --home-dot: rgba(60, 56, 76, 0.45);
+  }
+
+  :global(:root[data-theme="dark"]) {
+    --app-bg: radial-gradient(circle at top, #101418 0%, #151b22 45%, #1a202a 100%);
+    --app-text: #eef0f5;
+    --app-muted: #a6a9b6;
+    --app-accent: #c9b3ff;
+    --app-card-bg: rgba(23, 26, 34, 0.92);
+    --app-card-border: rgba(233, 235, 244, 0.12);
+    --app-card-shadow: 0 18px 36px rgba(0, 0, 0, 0.35);
+    --home-line: rgba(200, 210, 255, ALPHA);
+    --home-dot: rgba(210, 220, 255, 0.85);
   }
 
   .home-stack {
@@ -320,7 +359,7 @@
     margin: 0;
     font-family: "Source Serif 4", "Times New Roman", serif;
     font-size: clamp(2rem, 4vw, 2.8rem);
-    color: #1f1b2e;
+    color: var(--app-text);
   }
 
   .eyebrow {
@@ -328,14 +367,14 @@
     letter-spacing: 0.3em;
     font-size: 0.7rem;
     font-weight: 600;
-    color: #5e4b7a;
+    color: var(--app-accent);
     margin: 0;
   }
 
   .subhead {
     margin: 0;
     font-size: clamp(1rem, 2vw, 1.15rem);
-    color: #4b425c;
+    color: var(--app-muted);
     line-height: 1.6;
   }
 
@@ -353,11 +392,11 @@
     gap: 1.5rem;
     padding: 1.35rem 1.6rem;
     border-radius: 20px;
-    border: 1px solid rgba(32, 27, 47, 0.1);
-    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid var(--app-card-border);
+    background: var(--app-card-bg);
     text-decoration: none;
     color: inherit;
-    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--app-card-shadow);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
 
@@ -373,7 +412,7 @@
 
   .card p {
     margin: 0;
-    color: #4b425c;
+    color: var(--app-muted);
   }
 
   .card-arrow {
@@ -394,7 +433,7 @@
     font-weight: 600;
     text-decoration: none;
     font-size: 0.9rem;
-    color: rgba(44, 36, 56, 0.7);
+    color: var(--app-muted);
     padding: 0.25rem 0.35rem;
     display: inline-flex;
     align-items: center;
@@ -402,7 +441,7 @@
   }
 
   .site-footer a:hover {
-    color: rgba(27, 21, 36, 0.95);
+    color: var(--app-text);
   }
 
   .github-icon {

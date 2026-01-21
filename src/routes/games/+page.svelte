@@ -181,8 +181,28 @@
 {/if}
 
 <style>
-  :global(body) {
-    background: radial-gradient(circle at top, #f8f4ff 0%, #f1f5f8 45%, #f7efe3 100%);
+  :global(:root) {
+    --app-bg: radial-gradient(circle at top, #f8f4ff 0%, #f1f5f8 45%, #f7efe3 100%);
+    --app-text: #201b2f;
+    --app-muted: #4b425c;
+    --app-accent: #5e4b7a;
+    --app-card-bg: #fffaf3;
+    --app-card-border: rgba(32, 27, 47, 0.08);
+    --app-card-shadow: 0 20px 45px rgba(32, 27, 47, 0.08);
+    --app-card-hover-shadow: 0 28px 50px rgba(32, 27, 47, 0.12);
+    --app-thumb-bg: #f6efe6;
+  }
+
+  :global(:root[data-theme="dark"]) {
+    --app-bg: radial-gradient(circle at top, #12161c 0%, #171c25 45%, #1c2230 100%);
+    --app-text: #f0f2f7;
+    --app-muted: #b4b7c4;
+    --app-accent: #d6c3ff;
+    --app-card-bg: #191d26;
+    --app-card-border: rgba(240, 242, 247, 0.12);
+    --app-card-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+    --app-card-hover-shadow: 0 28px 50px rgba(0, 0, 0, 0.45);
+    --app-thumb-bg: #11151c;
   }
 
   .games-page {
@@ -191,18 +211,18 @@
     flex-direction: column;
     gap: 2.5rem;
     font-family: "Space Grotesk", system-ui, sans-serif;
-    color: #201b2f;
+    color: var(--app-text);
   }
 
   .breadcrumb {
     text-decoration: none;
-    color: #4b425c;
+    color: var(--app-muted);
     font-weight: 600;
     font-size: 0.9rem;
   }
 
   .breadcrumb:hover {
-    color: #2c2438;
+    color: var(--app-text);
   }
 
   .page-hero {
@@ -215,7 +235,7 @@
     letter-spacing: 0.2em;
     font-size: 0.75rem;
     font-weight: 600;
-    color: #5e4b7a;
+    color: var(--app-accent);
     margin: 0;
   }
 
@@ -229,7 +249,7 @@
     max-width: 44rem;
     margin: 0;
     font-size: 1.05rem;
-    color: #4b425c;
+    color: var(--app-muted);
   }
 
   .games-grid {
@@ -244,9 +264,9 @@
     gap: 1rem;
     padding: 1.5rem;
     border-radius: 24px;
-    background: #fffaf3;
-    border: 1px solid rgba(32, 27, 47, 0.08);
-    box-shadow: 0 20px 45px rgba(32, 27, 47, 0.08);
+    background: var(--app-card-bg);
+    border: 1px solid var(--app-card-border);
+    box-shadow: var(--app-card-shadow);
     text-decoration: none;
     color: inherit;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -260,7 +280,7 @@
 
   .game-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 28px 50px rgba(32, 27, 47, 0.12);
+    box-shadow: var(--app-card-hover-shadow);
   }
 
   .card-body h2 {
@@ -272,7 +292,7 @@
     width: 64px;
     height: 64px;
     border-radius: 16px;
-    background: #f6efe6;
+    background: var(--app-thumb-bg);
     display: grid;
     place-items: center;
     flex: 0 0 auto;

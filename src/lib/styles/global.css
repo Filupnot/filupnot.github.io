@@ -7,9 +7,14 @@ body {
   font-family: system-ui, sans-serif;
   min-height: 100vh;
   overflow: hidden;
-  background: radial-gradient(circle at top, #f8f4ff 0%, #f1f5f8 45%, #f7efe3 100%);
+  background: var(--app-bg, radial-gradient(circle at top, #f8f4ff 0%, #f1f5f8 45%, #f7efe3 100%));
+  color: var(--app-text, #1b1b1f);
 }
 
 a {
   color: inherit;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
 }
