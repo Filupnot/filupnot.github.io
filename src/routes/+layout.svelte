@@ -82,6 +82,21 @@
   class:top-content={isGamesIndexPath($page.url.pathname)}
   class:center-content={isGamesSubpath($page.url.pathname)}
   class:top-centered-content={isHomePath($page.url.pathname)}
+  data-page={
+    isHomePath($page.url.pathname)
+      ? "home"
+      : isGamesIndexPath($page.url.pathname)
+        ? "games"
+        : $page.url.pathname.includes("/games/darts-cricket")
+          ? "darts-cricket"
+          : $page.url.pathname.includes("/games/dominoes")
+            ? "dominoes"
+            : $page.url.pathname.includes("/games/oh-hell")
+              ? "oh-hell"
+              : $page.url.pathname.includes("/games/8-ball-pool")
+                ? "pool-league"
+                : "default"
+  }
 >
   <section class="content">
     <slot />
@@ -95,8 +110,25 @@
   aria-pressed={theme === "dark"}
   aria-label="Toggle dark mode"
   title="Toggle dark mode"
+  data-testid="theme-toggle"
 >
-  <span class="theme-label">{theme === "dark" ? "Light" : "Dark"}</span>
+  <span class="theme-icon" aria-hidden="true">
+    {#if theme === "dark"}
+      <svg viewBox="0 0 24 24" role="presentation" aria-hidden="true">
+        <path
+          fill="currentColor"
+          d="M12 4a1 1 0 0 1 1 1v1.5a1 1 0 1 1-2 0V5a1 1 0 0 1 1-1zm6.66 2.34a1 1 0 0 1 0 1.41l-1.06 1.06a1 1 0 1 1-1.41-1.41l1.06-1.06a1 1 0 0 1 1.41 0zM20 11a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 1 1-1zm-2.4 6.8a1 1 0 0 1 1.41 0l1.06 1.06a1 1 0 1 1-1.41 1.41l-1.06-1.06a1 1 0 0 1 0-1.41zM12 18.5a1 1 0 0 1 1 1V21a1 1 0 1 1-2 0v-1.5a1 1 0 0 1 1-1zM5.34 17.8a1 1 0 0 1 0 1.41l-1.06 1.06a1 1 0 1 1-1.41-1.41l1.06-1.06a1 1 0 0 1 1.41 0zM4 11a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 1 1-1zm2.4-6.8a1 1 0 0 1 1.41 0l1.06 1.06a1 1 0 1 1-1.41 1.41L6.4 5.61A1 1 0 0 1 6.4 4.2zM12 8.25a3.75 3.75 0 1 0 0 7.5 3.75 3.75 0 0 0 0-7.5z"
+        />
+      </svg>
+    {:else}
+      <svg viewBox="0 0 24 24" role="presentation" aria-hidden="true">
+        <path
+          fill="currentColor"
+          d="M12.7 3.4a1 1 0 0 1 .2 1.98 7.5 7.5 0 1 0 7.72 10.92 1 1 0 0 1 1.69.96A9.5 9.5 0 1 1 12.7 3.4z"
+        />
+      </svg>
+    {/if}
+  </span>
 </button>
 
 <style>
@@ -104,6 +136,9 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    background: var(--app-bg, radial-gradient(circle at top, #f8f4ff 0%, #f1f5f8 45%, #f7efe3 100%));
+    color: var(--app-text, #1b1b1f);
+    transition: background 0.2s ease, color 0.2s ease;
   }
 
   .content {
@@ -144,17 +179,33 @@
     background: rgba(255, 255, 255, 0.85);
     color: #1b1b1f;
     border-radius: 999px;
-    padding: 0.55rem 0.85rem;
-    font-size: 0.8rem;
+    width: 64px;
+    height: 64px;
+    padding: 0;
+    font-size: 1.35rem;
     font-weight: 600;
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
+    justify-content: center;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     cursor: pointer;
     box-shadow: 0 12px 24px rgba(17, 17, 23, 0.12);
     backdrop-filter: blur(8px);
+  }
+
+  .theme-icon {
+    width: 36px;
+    height: 36px;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .theme-icon svg {
+    width: 100%;
+    height: 100%;
   }
 
   .theme-toggle:focus-visible {
@@ -177,7 +228,8 @@
     .theme-toggle {
       top: 1rem;
       right: 1rem;
-      padding: 0.5rem 0.75rem;
+      width: 56px;
+      height: 56px;
     }
   }
 </style>

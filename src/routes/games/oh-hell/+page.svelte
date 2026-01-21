@@ -461,7 +461,7 @@
 </section>
 
 <style>
-  :global(:root) {
+  :global(main[data-page="oh-hell"]) {
     --app-bg: radial-gradient(circle at top, #f0f3f7 0%, #f7efe5 45%, #f1f6f1 100%);
     --app-text: #1b1a17;
     --app-muted: #4b425c;
@@ -486,7 +486,7 @@
     --app-reset: #c3392b;
   }
 
-  :global(:root[data-theme="dark"]) {
+  :global(:root[data-theme="dark"] main[data-page="oh-hell"]) {
     --app-bg: radial-gradient(circle at top, #131821 0%, #171c25 45%, #1c2230 100%);
     --app-text: #f0f1f4;
     --app-muted: #b3b6c2;
@@ -513,7 +513,6 @@
 
   :global(html, body) {
     margin: 0;
-    background: var(--app-bg);
     overflow-y: auto !important;
     overflow-x: hidden !important;
     touch-action: manipulation;

@@ -9,6 +9,9 @@
 	"/games": [
 		"src/routes/+layout.ts"
 	],
+	"/games/8-ball-pool": [
+		"src/routes/+layout.ts"
+	],
 	"/games/darts-cricket": [
 		"src/routes/+layout.ts"
 	],

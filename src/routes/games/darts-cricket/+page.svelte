@@ -178,7 +178,7 @@
 </section>
 
 <style>
-  :global(:root) {
+  :global(main[data-page="darts-cricket"]) {
     --app-bg: radial-gradient(circle at top, #f2efe8 0%, #e5edf2 45%, #f7f4ee 100%);
     --app-text: #1b1a17;
     --app-muted: #4b425c;
@@ -190,7 +190,7 @@
     --app-border: rgba(27, 26, 23, 0.08);
   }
 
-  :global(:root[data-theme="dark"]) {
+  :global(:root[data-theme="dark"] main[data-page="darts-cricket"]) {
     --app-bg: radial-gradient(circle at top, #12161c 0%, #1a2028 45%, #1f2530 100%);
     --app-text: #f0f1f4;
     --app-muted: #b3b6c2;
@@ -216,7 +216,6 @@
 
   :global(body) {
     margin: 0;
-    background: var(--app-bg);
     touch-action: manipulation;
   }
 

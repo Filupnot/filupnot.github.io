@@ -181,7 +181,7 @@
 {/if}
 
 <style>
-  :global(:root) {
+  :global(main[data-page="games"]) {
     --app-bg: radial-gradient(circle at top, #f8f4ff 0%, #f1f5f8 45%, #f7efe3 100%);
     --app-text: #201b2f;
     --app-muted: #4b425c;
@@ -193,7 +193,7 @@
     --app-thumb-bg: #f6efe6;
   }
 
-  :global(:root[data-theme="dark"]) {
+  :global(:root[data-theme="dark"] main[data-page="games"]) {
     --app-bg: radial-gradient(circle at top, #12161c 0%, #171c25 45%, #1c2230 100%);
     --app-text: #f0f2f7;
     --app-muted: #b4b7c4;

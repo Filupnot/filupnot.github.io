@@ -170,10 +170,36 @@
 </section>
 
 <style>
+  :global(main[data-page="pool-league"]) {
+    --app-bg: #f3f1ea;
+    --app-text: #1b1b1f;
+    --app-muted: #434855;
+    --app-accent: #2f5f68;
+    --app-card-bg: #ffffff;
+    --app-card-border: rgba(22, 26, 35, 0.08);
+    --app-card-shadow: 0 30px 60px rgba(30, 33, 43, 0.12);
+    --app-panel-bg: #f7f4ef;
+    --app-chip-bg: #14353d;
+    --app-chip-text: #fef8ee;
+    --app-ghost-border: rgba(27, 27, 31, 0.3);
+  }
+
+  :global(:root[data-theme="dark"] main[data-page="pool-league"]) {
+    --app-bg: #12161c;
+    --app-text: #f0f1f4;
+    --app-muted: #b3b6c2;
+    --app-accent: #9fd6df;
+    --app-card-bg: #1c222c;
+    --app-card-border: rgba(240, 241, 244, 0.12);
+    --app-card-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+    --app-panel-bg: #202633;
+    --app-chip-bg: #9fd6df;
+    --app-chip-text: #0f141a;
+    --app-ghost-border: rgba(240, 241, 244, 0.3);
+  }
+
   :global(body) {
     margin: 0;
-    background: #f3f1ea;
-    color: #1b1b1f;
     overflow: auto;
   }
 
@@ -187,19 +213,19 @@
     flex-direction: column;
     gap: 2.5rem;
     font-family: "Sora", system-ui, sans-serif;
-    color: #15161c;
+    color: var(--app-text);
     position: relative;
   }
 
   .breadcrumb {
     text-decoration: none;
-    color: #3f3f4a;
+    color: var(--app-muted);
     font-weight: 600;
     font-size: 0.9rem;
   }
 
   .breadcrumb:hover {
-    color: #15161c;
+    color: var(--app-text);
   }
 
   .hero {
@@ -213,7 +239,7 @@
     letter-spacing: 0.3em;
     font-size: 0.65rem;
     font-weight: 600;
-    color: #2f5f68;
+    color: var(--app-accent);
   }
 
   .hero h1 {
@@ -222,27 +248,15 @@
     margin: 0;
   }
 
-
   .pool-card {
-    background: #ffffff;
+    background: var(--app-card-bg);
     border-radius: 28px;
     padding: clamp(1.5rem, 2.5vw, 2.5rem);
-    border: 1px solid rgba(22, 26, 35, 0.08);
-    box-shadow: 0 30px 60px rgba(30, 33, 43, 0.12);
+    border: 1px solid var(--app-card-border);
+    box-shadow: var(--app-card-shadow);
     position: relative;
     overflow: hidden;
     animation: floatIn 0.7s ease both;
-  }
-
-  .pool-card::after {
-    content: "";
-    position: absolute;
-    inset: auto -10% -20% -10%;
-    height: 180px;
-    background: linear-gradient(90deg, rgba(42, 145, 160, 0.18), rgba(234, 183, 95, 0.2));
-    opacity: 0.7;
-    filter: blur(40px);
-    z-index: 0;
   }
 
   .card-top {
@@ -250,8 +264,6 @@
     justify-content: space-between;
     gap: 1.5rem;
     align-items: center;
-    position: relative;
-    z-index: 1;
     flex-wrap: wrap;
   }
 
@@ -260,7 +272,7 @@
     letter-spacing: 0.22em;
     font-size: 0.6rem;
     font-weight: 600;
-    color: #4e5260;
+    color: var(--app-muted);
   }
 
   .card-top h2 {
@@ -270,8 +282,8 @@
   }
 
   .chip {
-    background: #14353d;
-    color: #fef8ee;
+    background: var(--app-chip-bg);
+    color: var(--app-chip-text);
     padding: 0.5rem 0.9rem;
     border-radius: 999px;
     font-size: 0.75rem;
@@ -284,15 +296,13 @@
     margin-top: 2rem;
     display: grid;
     gap: 2rem;
-    position: relative;
-    z-index: 1;
   }
 
   .roster-block {
-    background: #f7f4ef;
+    background: var(--app-panel-bg);
     border-radius: 20px;
     padding: 1.5rem;
-    border: 1px solid rgba(22, 26, 35, 0.08);
+    border: 1px solid var(--app-card-border);
   }
 
   .roster-head {
@@ -312,11 +322,15 @@
     text-transform: uppercase;
     letter-spacing: 0.2em;
     font-weight: 600;
-    color: #2f5f68;
+    color: var(--app-accent);
   }
 
   .shift-pill {
     color: #8a5b1d;
+  }
+
+  :global(:root[data-theme="dark"] main[data-page="pool-league"]) .shift-pill {
+    color: #e0b46d;
   }
 
   .roster-grid {
@@ -332,7 +346,7 @@
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 0.18em;
-    color: #4d4f59;
+    color: var(--app-muted);
   }
 
   .name-field input {
@@ -340,9 +354,9 @@
     padding: 0.75rem 0.85rem;
     border-radius: 14px;
     border: 1px solid rgba(22, 26, 35, 0.15);
-    background: #ffffff;
+    background: var(--app-card-bg);
     font-size: 0.95rem;
-    color: #1b1b1f;
+    color: var(--app-text);
     transition: border 0.2s ease, box-shadow 0.2s ease;
   }
 
@@ -372,12 +386,12 @@
   }
 
   .schedule {
-    background: #ffffff;
-    color: #1b1b1f;
+    background: var(--app-card-bg);
+    color: var(--app-text);
     border-radius: 28px;
     padding: clamp(1.5rem, 2.5vw, 2.5rem);
-    border: 1px solid rgba(22, 26, 35, 0.08);
-    box-shadow: 0 30px 60px rgba(30, 33, 43, 0.12);
+    border: 1px solid var(--app-card-border);
+    box-shadow: var(--app-card-shadow);
     animation: riseIn 0.7s ease both;
   }
 
@@ -395,11 +409,10 @@
     font-size: clamp(1.6rem, 3vw, 2.2rem);
   }
 
-
   .ghost {
     background: transparent;
-    color: #1b1b1f;
-    border: 1px solid rgba(27, 27, 31, 0.3);
+    color: var(--app-text);
+    border: 1px solid var(--app-ghost-border);
     border-radius: 999px;
     padding: 0.75rem 1.4rem;
     text-transform: uppercase;
@@ -410,7 +423,7 @@
   }
 
   .ghost:hover {
-    border-color: #1b1b1f;
+    border-color: var(--app-text);
   }
 
   .round-grid {
@@ -421,10 +434,10 @@
   }
 
   .round-card {
-    background: #f7f4ef;
+    background: var(--app-panel-bg);
     border-radius: 20px;
     padding: 1.25rem;
-    border: 1px solid rgba(22, 26, 35, 0.08);
+    border: 1px solid var(--app-card-border);
     animation: staggerIn 0.6s ease both;
     animation-delay: calc(var(--delay) * 0.08s);
   }
@@ -439,7 +452,7 @@
     display: inline-flex;
     align-items: center;
     background: rgba(42, 145, 160, 0.18);
-    color: #1f5f6a;
+    color: var(--app-accent);
     padding: 0.4rem 0.7rem;
     border-radius: 999px;
     text-transform: uppercase;
@@ -451,7 +464,7 @@
 
   .round-away {
     font-size: 0.85rem;
-    color: rgba(28, 32, 38, 0.65);
+    color: var(--app-muted);
   }
 
   .round-card ul {
@@ -463,7 +476,7 @@
   }
 
   .round-card li {
-    background: #ffffff;
+    background: var(--app-card-bg);
     border-radius: 14px;
     padding: 0.8rem 0.9rem;
     display: grid;
@@ -474,7 +487,7 @@
     text-transform: uppercase;
     letter-spacing: 0.2em;
     font-size: 0.6rem;
-    color: rgba(28, 32, 38, 0.5);
+    color: var(--app-muted);
   }
 
   .names {
@@ -493,7 +506,7 @@
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.2em;
-    color: rgba(28, 32, 38, 0.45);
+    color: var(--app-muted);
   }
 
   @keyframes fadeIn {

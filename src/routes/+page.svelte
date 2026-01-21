@@ -45,7 +45,8 @@
     let themeObserver: MutationObserver | null = null;
 
     const syncThemeColors = () => {
-      const styles = getComputedStyle(document.documentElement);
+      const target = document.querySelector("main.page") || document.documentElement;
+      const styles = getComputedStyle(target);
       const line = styles.getPropertyValue("--home-line").trim();
       const dot = styles.getPropertyValue("--home-dot").trim();
       if (line) colors.line = line;
@@ -270,7 +271,7 @@
 </footer>
 
 <style>
-  :global(:root) {
+  :global(main[data-page="home"]) {
     --app-bg: radial-gradient(circle at top, #f2efe8 0%, #e5edf2 45%, #f7f4ee 100%);
     --app-text: #1f1b2e;
     --app-muted: #4b425c;
@@ -278,11 +279,11 @@
     --app-card-bg: rgba(255, 255, 255, 0.9);
     --app-card-border: rgba(32, 27, 47, 0.1);
     --app-card-shadow: 0 18px 36px rgba(0, 0, 0, 0.08);
-    --home-line: rgba(60, 56, 76, ALPHA);
-    --home-dot: rgba(60, 56, 76, 0.45);
+    --home-line: rgba(42, 38, 68, ALPHA);
+    --home-dot: rgba(42, 38, 68, 0.6);
   }
 
-  :global(:root[data-theme="dark"]) {
+  :global(:root[data-theme="dark"] main[data-page="home"]) {
     --app-bg: radial-gradient(circle at top, #101418 0%, #151b22 45%, #1a202a 100%);
     --app-text: #eef0f5;
     --app-muted: #a6a9b6;
@@ -290,8 +291,8 @@
     --app-card-bg: rgba(23, 26, 34, 0.92);
     --app-card-border: rgba(233, 235, 244, 0.12);
     --app-card-shadow: 0 18px 36px rgba(0, 0, 0, 0.35);
-    --home-line: rgba(200, 210, 255, ALPHA);
-    --home-dot: rgba(210, 220, 255, 0.85);
+    --home-line: rgba(235, 244, 255, ALPHA);
+    --home-dot: rgba(235, 244, 255, 0.9);
   }
 
   .home-stack {
