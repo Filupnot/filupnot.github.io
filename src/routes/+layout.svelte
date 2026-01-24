@@ -60,6 +60,22 @@
   const isHomePath = (pathname: string) => {
     return pathname === "/" || pathname === base || pathname === `${base}/`;
   };
+
+  const resolvePageKey = (pathname: string) => {
+    if (isHomePath(pathname)) return "home";
+    if (isGamesIndexPath(pathname)) return "games";
+    if (pathname.includes("/games/darts-cricket")) return "darts-cricket";
+    if (pathname.includes("/games/dominoes")) return "dominoes";
+    if (pathname.includes("/games/oh-hell")) return "oh-hell";
+    if (pathname.includes("/games/8-ball-pool")) return "pool-league";
+    if (pathname.includes("/games/pass-the-pigs")) return "pass-the-pigs";
+    return "default";
+  };
+
+  $: pageKey = resolvePageKey($page.url.pathname);
+  $: if (typeof document !== "undefined") {
+    document.body.dataset.page = pageKey;
+  }
 </script>
 
 <svelte:head>
@@ -82,21 +98,7 @@
   class:top-content={isGamesIndexPath($page.url.pathname)}
   class:center-content={isGamesSubpath($page.url.pathname)}
   class:top-centered-content={isHomePath($page.url.pathname)}
-  data-page={
-    isHomePath($page.url.pathname)
-      ? "home"
-      : isGamesIndexPath($page.url.pathname)
-        ? "games"
-        : $page.url.pathname.includes("/games/darts-cricket")
-          ? "darts-cricket"
-          : $page.url.pathname.includes("/games/dominoes")
-            ? "dominoes"
-            : $page.url.pathname.includes("/games/oh-hell")
-              ? "oh-hell"
-              : $page.url.pathname.includes("/games/8-ball-pool")
-                ? "pool-league"
-                : "default"
-  }
+  data-page={pageKey}
 >
   <section class="content">
     <slot />
@@ -171,7 +173,7 @@
   }
 
   .theme-toggle {
-    position: fixed;
+    position: absolute;
     top: 1.5rem;
     right: 1.5rem;
     z-index: 50;

@@ -119,6 +119,11 @@
       title: "Pool League",
       path: "/games/8-ball-pool",
       thumbnail: "/pool-thumb.svg"
+    },
+    {
+      title: "Pass the Pigs",
+      path: "/games/pass-the-pigs",
+      thumbnail: "/pigs-thumb.svg"
     }
   ];
 </script>

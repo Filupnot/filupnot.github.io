@@ -20,5 +20,8 @@
 	],
 	"/games/oh-hell": [
 		"src/routes/+layout.ts"
+	],
+	"/games/pass-the-pigs": [
+		"src/routes/+layout.ts"
 	]
 }

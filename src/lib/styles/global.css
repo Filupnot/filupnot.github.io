@@ -6,9 +6,14 @@ body {
   margin: 0;
   font-family: system-ui, sans-serif;
   min-height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   background: var(--app-bg, radial-gradient(circle at top, #f8f4ff 0%, #f1f5f8 45%, #f7efe3 100%));
   color: var(--app-text, #1b1b1f);
+}
+
+body[data-page="home"] {
+  overflow: hidden;
 }
 
 a {
