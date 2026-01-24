@@ -1,21 +1,90 @@
-import { c as create_ssr_component } from "../../chunks/ssr.js";
+import { U as store_get, V as head, W as attr_class, X as attr, Y as slot, Z as unsubscribe_stores, _ as stringify } from "../../chunks/index2.js";
 import { b as base } from "../../chunks/server.js";
 import "@sveltejs/kit/internal/server";
-import { e as escape } from "../../chunks/escape.js";
-const css = {
-  code: ".page.svelte-1uxu19y{min-height:100vh;display:flex;flex-direction:column}.site-header.svelte-1uxu19y{padding:1rem 1.5rem;border-bottom:1px solid #ddd}.content.svelte-1uxu19y{flex:1;display:flex;align-items:center;justify-content:center;padding:2rem 1.5rem}.site-footer.svelte-1uxu19y{padding:1rem 1.5rem;border-top:1px solid #ddd}.nav.svelte-1uxu19y{display:flex;gap:1rem}@media(max-width: 720px){.site-header.svelte-1uxu19y{padding:0.75rem 1rem}.content.svelte-1uxu19y{padding:1.5rem 1rem}}",
-  map: '{"version":3,"file":"+layout.svelte","sources":["+layout.svelte"],"sourcesContent":["<script lang=\\"ts\\">import \\"../lib/styles/global.css\\";\\nimport { base } from \\"$app/paths\\";\\nconst footerMarkdown = \\"github.com/filupnot\\";\\nconst renderFooter = (markdown) => {\\n  const trimmed = markdown.trim();\\n  const url = trimmed.startsWith(\\"http\\") ? trimmed : `https://${trimmed}`;\\n  return `<a href=\\"${url}\\" target=\\"_blank\\" rel=\\"noreferrer\\">${trimmed}</a>`;\\n};\\n<\/script>\\n\\n<svelte:head>\\n  <link rel=\\"icon\\" href=\\"/favicon.svg\\" type=\\"image/svg+xml\\" />\\n</svelte:head>\\n\\n<main class=\\"page\\">\\n  <header class=\\"site-header\\">\\n    <nav class=\\"nav\\">\\n      <a href=\\"{base}/\\">Home</a>\\n      <a href=\\"{base}/about\\">About</a>\\n    </nav>\\n  </header>\\n\\n  <section class=\\"content\\">\\n    <slot />\\n  </section>\\n\\n  <footer class=\\"site-footer\\">\\n    <div class=\\"footer-content\\">\\n      {@html renderFooter(footerMarkdown)}\\n    </div>\\n  </footer>\\n</main>\\n\\n<style>\\n  .page {\\n    min-height: 100vh;\\n    display: flex;\\n    flex-direction: column;\\n  }\\n\\n  .site-header {\\n    padding: 1rem 1.5rem;\\n    border-bottom: 1px solid #ddd;\\n  }\\n\\n  .content {\\n    flex: 1;\\n    display: flex;\\n    align-items: center;\\n    justify-content: center;\\n    padding: 2rem 1.5rem;\\n  }\\n\\n  .site-footer {\\n    padding: 1rem 1.5rem;\\n    border-top: 1px solid #ddd;\\n  }\\n\\n  .nav {\\n    display: flex;\\n    gap: 1rem;\\n  }\\n\\n  @media (max-width: 720px) {\\n    .site-header {\\n      padding: 0.75rem 1rem;\\n    }\\n\\n    .content {\\n      padding: 1.5rem 1rem;\\n    }\\n  }\\n</style>\\n"],"names":[],"mappings":"AAkCE,oBAAM,CACJ,UAAU,CAAE,KAAK,CACjB,OAAO,CAAE,IAAI,CACb,cAAc,CAAE,MAClB,CAEA,2BAAa,CACX,OAAO,CAAE,IAAI,CAAC,MAAM,CACpB,aAAa,CAAE,GAAG,CAAC,KAAK,CAAC,IAC3B,CAEA,uBAAS,CACP,IAAI,CAAE,CAAC,CACP,OAAO,CAAE,IAAI,CACb,WAAW,CAAE,MAAM,CACnB,eAAe,CAAE,MAAM,CACvB,OAAO,CAAE,IAAI,CAAC,MAChB,CAEA,2BAAa,CACX,OAAO,CAAE,IAAI,CAAC,MAAM,CACpB,UAAU,CAAE,GAAG,CAAC,KAAK,CAAC,IACxB,CAEA,mBAAK,CACH,OAAO,CAAE,IAAI,CACb,GAAG,CAAE,IACP,CAEA,MAAO,YAAY,KAAK,CAAE,CACxB,2BAAa,CACX,OAAO,CAAE,OAAO,CAAC,IACnB,CAEA,uBAAS,CACP,OAAO,CAAE,MAAM,CAAC,IAClB,CACF"}'
-};
-const footerMarkdown = "github.com/filupnot";
-const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  const renderFooter = (markdown) => {
-    const trimmed = markdown.trim();
-    const url = trimmed.startsWith("http") ? trimmed : `https://${trimmed}`;
-    return `<a href="${url}" target="_blank" rel="noreferrer">${trimmed}</a>`;
+import { g as getContext } from "../../chunks/context.js";
+import "clsx";
+import "@sveltejs/kit/internal";
+import "../../chunks/exports.js";
+import "../../chunks/utils.js";
+import "../../chunks/state.svelte.js";
+const getStores = () => {
+  const stores$1 = getContext("__svelte__");
+  return {
+    /** @type {typeof page} */
+    page: {
+      subscribe: stores$1.page.subscribe
+    },
+    /** @type {typeof navigating} */
+    navigating: {
+      subscribe: stores$1.navigating.subscribe
+    },
+    /** @type {typeof updated} */
+    updated: stores$1.updated
   };
-  $$result.css.add(css);
-  return `${$$result.head += `<!-- HEAD_svelte-czf5ns_START --><link rel="icon" href="/favicon.svg" type="image/svg+xml"><!-- HEAD_svelte-czf5ns_END -->`, ""} <main class="page svelte-1uxu19y"><header class="site-header svelte-1uxu19y" data-svelte-h="svelte-hswi8w"><nav class="nav svelte-1uxu19y"><a href="${escape(base, true) + "/"}">Home</a> <a href="${escape(base, true) + "/about"}">About</a></nav></header> <section class="content svelte-1uxu19y">${slots.default ? slots.default({}) : ``}</section> <footer class="site-footer svelte-1uxu19y"><div class="footer-content"><!-- HTML_TAG_START -->${renderFooter(footerMarkdown)}<!-- HTML_TAG_END --></div></footer> </main>`;
-});
+};
+const page = {
+  subscribe(fn) {
+    const store = getStores().page;
+    return store.subscribe(fn);
+  }
+};
+function _layout($$renderer, $$props) {
+  $$renderer.component(($$renderer2) => {
+    var $$store_subs;
+    let pageKey;
+    let theme = "light";
+    const isGamesPath = (pathname) => {
+      return pathname === "/games" || pathname.startsWith("/games/") || pathname === `${base}/games` || pathname.startsWith(`${base}/games/`);
+    };
+    const isGamesIndexPath = (pathname) => {
+      return pathname === "/games" || pathname === `${base}/games`;
+    };
+    const isGamesSubpath = (pathname) => {
+      return isGamesPath(pathname) && !isGamesIndexPath(pathname);
+    };
+    const isHomePath = (pathname) => {
+      return pathname === "/" || pathname === base || pathname === `${base}/`;
+    };
+    const resolvePageKey = (pathname) => {
+      if (isHomePath(pathname)) return "home";
+      if (isGamesIndexPath(pathname)) return "games";
+      if (pathname.includes("/games/darts-cricket")) return "darts-cricket";
+      if (pathname.includes("/games/dominoes")) return "dominoes";
+      if (pathname.includes("/games/oh-hell")) return "oh-hell";
+      if (pathname.includes("/games/8-ball-pool")) return "pool-league";
+      if (pathname.includes("/games/pass-the-pigs")) return "pass-the-pigs";
+      return "default";
+    };
+    pageKey = resolvePageKey(store_get($$store_subs ??= {}, "$page", page).url.pathname);
+    if (typeof document !== "undefined") {
+      document.body.dataset.page = pageKey;
+    }
+    head("12qhfyh", $$renderer2, ($$renderer3) => {
+      $$renderer3.push(`<link rel="icon"${attr("href", `${stringify(base)}/knot.png`)} type="image/png"/> <link rel="icon"${attr("href", `${stringify(base)}/icons/icon-32.png`)} sizes="32x32" type="image/png"/> <link rel="icon"${attr("href", `${stringify(base)}/icons/icon-16.png`)} sizes="16x16" type="image/png"/> <link rel="apple-touch-icon"${attr("href", `${stringify(base)}/icons/apple-touch-icon.png`)} sizes="180x180"/> `);
+      if (isGamesPath(store_get($$store_subs ??= {}, "$page", page).url.pathname)) {
+        $$renderer3.push("<!--[-->");
+        $$renderer3.push(`<link rel="manifest"${attr("href", `${stringify(base)}/games/manifest.json`)}/>`);
+      } else {
+        $$renderer3.push("<!--[!-->");
+        $$renderer3.push(`<link rel="manifest"${attr("href", `${stringify(base)}/manifest.json`)}/>`);
+      }
+      $$renderer3.push(`<!--]--> <meta name="apple-mobile-web-app-capable" content="yes"/> <meta name="apple-mobile-web-app-title" content="Scorecards"/> <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>`);
+    });
+    $$renderer2.push(`<main${attr_class("page svelte-12qhfyh", void 0, {
+      "top-content": isGamesIndexPath(store_get($$store_subs ??= {}, "$page", page).url.pathname),
+      "center-content": isGamesSubpath(store_get($$store_subs ??= {}, "$page", page).url.pathname),
+      "top-centered-content": isHomePath(store_get($$store_subs ??= {}, "$page", page).url.pathname)
+    })}${attr("data-page", pageKey)}><section class="content svelte-12qhfyh"><!--[-->`);
+    slot($$renderer2, $$props, "default", {});
+    $$renderer2.push(`<!--]--></section></main> <button class="theme-toggle svelte-12qhfyh" type="button"${attr("aria-pressed", theme === "dark")} aria-label="Toggle dark mode" title="Toggle dark mode" data-testid="theme-toggle"><span class="theme-icon svelte-12qhfyh" aria-hidden="true">`);
+    {
+      $$renderer2.push("<!--[!-->");
+      $$renderer2.push(`<svg viewBox="0 0 24 24" role="presentation" aria-hidden="true" class="svelte-12qhfyh"><path fill="currentColor" d="M12.7 3.4a1 1 0 0 1 .2 1.98 7.5 7.5 0 1 0 7.72 10.92 1 1 0 0 1 1.69.96A9.5 9.5 0 1 1 12.7 3.4z"></path></svg>`);
+    }
+    $$renderer2.push(`<!--]--></span></button>`);
+    if ($$store_subs) unsubscribe_stores($$store_subs);
+  });
+}
 export {
-  Layout as default
+  _layout as default
 };

@@ -1,3 +1,4 @@
+const DEV = false;
 let base = "";
 let assets = base;
 const app_dir = "_app";
@@ -15,6 +16,7 @@ function set_assets(path) {
   assets = initial.assets = path;
 }
 export {
+  DEV as D,
   assets as a,
   base as b,
   app_dir as c,

@@ -10,24 +10,39 @@
       "_server.js"
     ]
   },
+  "_context.js": {
+    "file": "chunks/context.js",
+    "name": "context"
+  },
   "_environment.js": {
     "file": "chunks/environment.js",
     "name": "environment"
-  },
-  "_escape.js": {
-    "file": "chunks/escape.js",
-    "name": "escape"
   },
   "_exports.js": {
     "file": "chunks/exports.js",
     "name": "exports"
   },
+  "_index.js": {
+    "file": "chunks/index.js",
+    "name": "index",
+    "imports": [
+      "_context.js"
+    ]
+  },
+  "_index2.js": {
+    "file": "chunks/index2.js",
+    "name": "index",
+    "imports": [
+      "_context.js",
+      "_server.js"
+    ]
+  },
   "_internal.js": {
     "file": "chunks/internal.js",
     "name": "internal",
     "imports": [
-      "_ssr.js",
-      "_ssr2.js",
+      "_index2.js",
+      "_context.js",
       "_environment.js",
       "_server.js"
     ]
@@ -43,13 +58,12 @@
       "_utils.js"
     ]
   },
-  "_ssr.js": {
-    "file": "chunks/ssr.js",
-    "name": "ssr"
-  },
-  "_ssr2.js": {
-    "file": "chunks/ssr2.js",
-    "name": "ssr"
+  "_state.svelte.js": {
+    "file": "chunks/state.svelte.js",
+    "name": "state.svelte",
+    "imports": [
+      "_context.js"
+    ]
   },
   "_utils.js": {
     "file": "chunks/utils.js",
@@ -66,17 +80,17 @@
       "_environment.js"
     ]
   },
-  "node_modules/@sveltejs/kit/src/runtime/components/svelte-4/error.svelte": {
+  "node_modules/@sveltejs/kit/src/runtime/components/svelte-5/error.svelte": {
     "file": "entries/fallbacks/error.svelte.js",
     "name": "entries/fallbacks/error.svelte",
-    "src": "node_modules/@sveltejs/kit/src/runtime/components/svelte-4/error.svelte",
+    "src": "node_modules/@sveltejs/kit/src/runtime/components/svelte-5/error.svelte",
     "isEntry": true,
     "imports": [
-      "_ssr.js",
+      "_context.js",
+      "_state.svelte.js",
       "_exports.js",
       "_utils.js",
-      "_ssr2.js",
-      "_escape.js"
+      "_index.js"
     ]
   },
   "node_modules/@sveltejs/kit/src/runtime/server/index.js": {
@@ -85,11 +99,11 @@
     "src": "node_modules/@sveltejs/kit/src/runtime/server/index.js",
     "isEntry": true,
     "imports": [
-      "_shared.js",
       "_server.js",
+      "_shared.js",
       "_exports.js",
       "_utils.js",
-      "_ssr.js",
+      "_index.js",
       "_internal.js"
     ]
   },
@@ -99,12 +113,15 @@
     "src": "src/routes/+layout.svelte",
     "isEntry": true,
     "imports": [
-      "_ssr.js",
+      "_index2.js",
       "_server.js",
-      "_escape.js"
+      "_context.js",
+      "_exports.js",
+      "_utils.js",
+      "_state.svelte.js"
     ],
     "css": [
-      "_app/immutable/assets/_layout.B_I4SDS5.css"
+      "_app/immutable/assets/_layout.B41l26pg.css"
     ]
   },
   "src/routes/+layout.ts": {
@@ -119,12 +136,12 @@
     "src": "src/routes/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_ssr.js",
+      "_index2.js",
       "_server.js",
-      "_escape.js"
+      "_context.js"
     ],
     "css": [
-      "_app/immutable/assets/_page.DVeNNZsw.css"
+      "_app/immutable/assets/_page.CbqODTZj.css"
     ]
   },
   "src/routes/about/+page.svelte": {
@@ -132,11 +149,92 @@
     "name": "entries/pages/about/_page.svelte",
     "src": "src/routes/about/+page.svelte",
     "isEntry": true,
+    "css": [
+      "_app/immutable/assets/_page.DsoII8W4.css"
+    ]
+  },
+  "src/routes/games/+page.svelte": {
+    "file": "entries/pages/games/_page.svelte.js",
+    "name": "entries/pages/games/_page.svelte",
+    "src": "src/routes/games/+page.svelte",
+    "isEntry": true,
     "imports": [
-      "_ssr.js"
+      "_index2.js",
+      "_server.js",
+      "_context.js"
     ],
     "css": [
-      "_app/immutable/assets/_page.BEkLjZFH.css"
+      "_app/immutable/assets/_page.BHYr-sOj.css"
+    ]
+  },
+  "src/routes/games/8-ball-pool/+page.svelte": {
+    "file": "entries/pages/games/8-ball-pool/_page.svelte.js",
+    "name": "entries/pages/games/8-ball-pool/_page.svelte",
+    "src": "src/routes/games/8-ball-pool/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index2.js",
+      "_server.js",
+      "_context.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_page.BpcCwrzg.css"
+    ]
+  },
+  "src/routes/games/darts-cricket/+page.svelte": {
+    "file": "entries/pages/games/darts-cricket/_page.svelte.js",
+    "name": "entries/pages/games/darts-cricket/_page.svelte",
+    "src": "src/routes/games/darts-cricket/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index2.js",
+      "_server.js",
+      "_context.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_page.9KfQwhTC.css"
+    ]
+  },
+  "src/routes/games/dominoes/+page.svelte": {
+    "file": "entries/pages/games/dominoes/_page.svelte.js",
+    "name": "entries/pages/games/dominoes/_page.svelte",
+    "src": "src/routes/games/dominoes/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index2.js",
+      "_server.js",
+      "_context.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_page.Cby07r-7.css"
+    ]
+  },
+  "src/routes/games/oh-hell/+page.svelte": {
+    "file": "entries/pages/games/oh-hell/_page.svelte.js",
+    "name": "entries/pages/games/oh-hell/_page.svelte",
+    "src": "src/routes/games/oh-hell/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index2.js",
+      "_server.js",
+      "_context.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_page.BzuschTq.css"
+    ]
+  },
+  "src/routes/games/pass-the-pigs/+page.svelte": {
+    "file": "entries/pages/games/pass-the-pigs/_page.svelte.js",
+    "name": "entries/pages/games/pass-the-pigs/_page.svelte",
+    "src": "src/routes/games/pass-the-pigs/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index2.js",
+      "_server.js",
+      "_context.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_page.CUGw4k1d.css"
     ]
   }
 }
