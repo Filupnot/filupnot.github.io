@@ -9,6 +9,11 @@ function _page($$renderer, $$props) {
         title: "Game Score Tools",
         description: "Simple score tracking tools for games.",
         href: "/games"
+      },
+      {
+        title: "Ren's Tools",
+        description: "Glass weight calculator and more.",
+        href: "/ren"
       }
     ];
     head("1uha8ag", $$renderer2, ($$renderer3) => {

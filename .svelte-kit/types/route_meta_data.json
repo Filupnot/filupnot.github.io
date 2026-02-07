@@ -23,5 +23,11 @@
 	],
 	"/games/pass-the-pigs": [
 		"src/routes/+layout.ts"
+	],
+	"/ren": [
+		"src/routes/+layout.ts"
+	],
+	"/ren/glass-weight-calculator": [
+		"src/routes/+layout.ts"
 	]
 }

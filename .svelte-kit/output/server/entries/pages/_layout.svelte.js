@@ -45,6 +45,12 @@ function _layout($$renderer, $$props) {
     const isHomePath = (pathname) => {
       return pathname === "/" || pathname === base || pathname === `${base}/`;
     };
+    const isRenPath = (pathname) => {
+      return pathname === "/ren" || pathname.startsWith("/ren/") || pathname === `${base}/ren` || pathname.startsWith(`${base}/ren/`);
+    };
+    const isRenIndexPath = (pathname) => {
+      return pathname === "/ren" || pathname === `${base}/ren`;
+    };
     const resolvePageKey = (pathname) => {
       if (isHomePath(pathname)) return "home";
       if (isGamesIndexPath(pathname)) return "games";
@@ -53,6 +59,8 @@ function _layout($$renderer, $$props) {
       if (pathname.includes("/games/oh-hell")) return "oh-hell";
       if (pathname.includes("/games/8-ball-pool")) return "pool-league";
       if (pathname.includes("/games/pass-the-pigs")) return "pass-the-pigs";
+      if (isRenIndexPath(pathname)) return "ren";
+      if (pathname.includes("/ren/glass-weight-calculator")) return "glass-weight-calculator";
       return "default";
     };
     pageKey = resolvePageKey(store_get($$store_subs ??= {}, "$page", page).url.pathname);
@@ -71,7 +79,7 @@ function _layout($$renderer, $$props) {
       $$renderer3.push(`<!--]--> <meta name="apple-mobile-web-app-capable" content="yes"/> <meta name="apple-mobile-web-app-title" content="Scorecards"/> <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>`);
     });
     $$renderer2.push(`<main${attr_class("page svelte-12qhfyh", void 0, {
-      "top-content": isGamesIndexPath(store_get($$store_subs ??= {}, "$page", page).url.pathname),
+      "top-content": isGamesIndexPath(store_get($$store_subs ??= {}, "$page", page).url.pathname) || isRenPath(store_get($$store_subs ??= {}, "$page", page).url.pathname),
       "center-content": isGamesSubpath(store_get($$store_subs ??= {}, "$page", page).url.pathname),
       "top-centered-content": isHomePath(store_get($$store_subs ??= {}, "$page", page).url.pathname)
     })}${attr("data-page", pageKey)}><section class="content svelte-12qhfyh"><!--[-->`);

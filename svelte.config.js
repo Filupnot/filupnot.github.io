@@ -17,7 +17,7 @@ const config = {
       base
     },
     prerender: {
-      entries: ['*']
+      entries: ['*', '/ren', '/ren/glass-weight-calculator']
     }
   }
 };

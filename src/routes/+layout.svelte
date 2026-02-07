@@ -61,6 +61,23 @@
     return pathname === "/" || pathname === base || pathname === `${base}/`;
   };
 
+  const isRenPath = (pathname: string) => {
+    return (
+      pathname === "/ren" ||
+      pathname.startsWith("/ren/") ||
+      pathname === `${base}/ren` ||
+      pathname.startsWith(`${base}/ren/`)
+    );
+  };
+
+  const isRenIndexPath = (pathname: string) => {
+    return pathname === "/ren" || pathname === `${base}/ren`;
+  };
+
+  const isRenSubpath = (pathname: string) => {
+    return isRenPath(pathname) && !isRenIndexPath(pathname);
+  };
+
   const resolvePageKey = (pathname: string) => {
     if (isHomePath(pathname)) return "home";
     if (isGamesIndexPath(pathname)) return "games";
@@ -69,6 +86,8 @@
     if (pathname.includes("/games/oh-hell")) return "oh-hell";
     if (pathname.includes("/games/8-ball-pool")) return "pool-league";
     if (pathname.includes("/games/pass-the-pigs")) return "pass-the-pigs";
+    if (isRenIndexPath(pathname)) return "ren";
+    if (pathname.includes("/ren/glass-weight-calculator")) return "glass-weight-calculator";
     return "default";
   };
 
@@ -95,7 +114,7 @@
 
 <main
   class="page"
-  class:top-content={isGamesIndexPath($page.url.pathname)}
+  class:top-content={isGamesIndexPath($page.url.pathname) || isRenPath($page.url.pathname)}
   class:center-content={isGamesSubpath($page.url.pathname)}
   class:top-centered-content={isHomePath($page.url.pathname)}
   data-page={pageKey}

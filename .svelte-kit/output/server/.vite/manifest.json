@@ -236,5 +236,33 @@
     "css": [
       "_app/immutable/assets/_page.CUGw4k1d.css"
     ]
+  },
+  "src/routes/ren/+page.svelte": {
+    "file": "entries/pages/ren/_page.svelte.js",
+    "name": "entries/pages/ren/_page.svelte",
+    "src": "src/routes/ren/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index2.js",
+      "_server.js",
+      "_context.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_page.DLCTgpQ7.css"
+    ]
+  },
+  "src/routes/ren/glass-weight-calculator/+page.svelte": {
+    "file": "entries/pages/ren/glass-weight-calculator/_page.svelte.js",
+    "name": "entries/pages/ren/glass-weight-calculator/_page.svelte",
+    "src": "src/routes/ren/glass-weight-calculator/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index2.js",
+      "_server.js",
+      "_context.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_page.CxdbcJ75.css"
+    ]
   }
 }
