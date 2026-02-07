@@ -4,9 +4,12 @@
 
   const cards = [
     {
-      title: "Game Score Tools",
-      description: "Simple score tracking tools for games.",
+      title: "Game Score Trackers",
       href: "/games"
+    },
+    {
+      title: "Ren's Tools",
+      href: "/ren"
     }
   ];
 
@@ -238,10 +241,7 @@
   <section class="cards">
     {#each cards as card}
       <a class="card" href="{base}{card.href}">
-        <div class="card-text">
-          <h3>{card.title}</h3>
-          <p>{card.description}</p>
-        </div>
+        <h3>{card.title}</h3>
         <span class="card-arrow" aria-hidden="true">→</span>
       </a>
     {/each}
@@ -383,7 +383,6 @@
     display: grid;
     gap: 1rem;
     width: 100%;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   }
 
   .card {
@@ -407,13 +406,8 @@
   }
 
   .card h3 {
-    margin: 0 0 0.35rem;
-    font-size: 1.2rem;
-  }
-
-  .card p {
     margin: 0;
-    color: var(--app-muted);
+    font-size: 1.1rem;
   }
 
   .card-arrow {
