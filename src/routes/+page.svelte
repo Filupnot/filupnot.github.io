@@ -8,6 +8,10 @@
       href: "/games"
     },
     {
+      title: "Workout Tracker",
+      href: "/workout"
+    },
+    {
       title: "Ren's Tools",
       href: "/ren"
     }
