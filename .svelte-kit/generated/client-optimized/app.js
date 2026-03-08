@@ -12,22 +12,27 @@ export const nodes = [
 	() => import('./nodes/8'),
 	() => import('./nodes/9'),
 	() => import('./nodes/10'),
-	() => import('./nodes/11')
+	() => import('./nodes/11'),
+	() => import('./nodes/12'),
+	() => import('./nodes/13'),
+	() => import('./nodes/14')
 ];
 
 export const server_loads = [];
 
 export const dictionary = {
-		"/": [2],
-		"/about": [3],
-		"/games": [4],
-		"/games/8-ball-pool": [5],
-		"/games/darts-cricket": [6],
-		"/games/dominoes": [7],
-		"/games/oh-hell": [8],
-		"/games/pass-the-pigs": [9],
-		"/ren": [10],
-		"/ren/glass-weight-calculator": [11]
+		"/": [3],
+		"/about": [4],
+		"/games": [5],
+		"/games/8-ball-pool": [6],
+		"/games/darts-cricket": [7],
+		"/games/dominoes": [8],
+		"/games/oh-hell": [9],
+		"/games/pass-the-pigs": [10],
+		"/ren": [11],
+		"/ren/glass-weight-calculator": [12],
+		"/workout": [13,[2]],
+		"/workout/[type]": [14,[2]]
 	};
 
 export const hooks = {

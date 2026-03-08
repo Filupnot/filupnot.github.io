@@ -1,0 +1,1 @@
+export { default as component } from "../../../../src/routes/ren/glass-weight-calculator/+page.svelte";

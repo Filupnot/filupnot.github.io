@@ -51,6 +51,12 @@ function _layout($$renderer, $$props) {
     const isRenIndexPath = (pathname) => {
       return pathname === "/ren" || pathname === `${base}/ren`;
     };
+    const isWorkoutPath = (pathname) => {
+      return pathname === "/workout" || pathname.startsWith("/workout/") || pathname === `${base}/workout` || pathname.startsWith(`${base}/workout/`);
+    };
+    const isWorkoutIndexPath = (pathname) => {
+      return pathname === "/workout" || pathname === `${base}/workout` || pathname === "/workout/" || pathname === `${base}/workout/`;
+    };
     const resolvePageKey = (pathname) => {
       if (isHomePath(pathname)) return "home";
       if (isGamesIndexPath(pathname)) return "games";
@@ -61,6 +67,8 @@ function _layout($$renderer, $$props) {
       if (pathname.includes("/games/pass-the-pigs")) return "pass-the-pigs";
       if (isRenIndexPath(pathname)) return "ren";
       if (pathname.includes("/ren/glass-weight-calculator")) return "glass-weight-calculator";
+      if (isWorkoutIndexPath(pathname)) return "workout";
+      if (isWorkoutPath(pathname)) return "workout-active";
       return "default";
     };
     pageKey = resolvePageKey(store_get($$store_subs ??= {}, "$page", page).url.pathname);
@@ -79,7 +87,7 @@ function _layout($$renderer, $$props) {
       $$renderer3.push(`<!--]--> <meta name="apple-mobile-web-app-capable" content="yes"/> <meta name="apple-mobile-web-app-title" content="Scorecards"/> <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>`);
     });
     $$renderer2.push(`<main${attr_class("page svelte-12qhfyh", void 0, {
-      "top-content": isGamesIndexPath(store_get($$store_subs ??= {}, "$page", page).url.pathname) || isRenPath(store_get($$store_subs ??= {}, "$page", page).url.pathname),
+      "top-content": isGamesIndexPath(store_get($$store_subs ??= {}, "$page", page).url.pathname) || isRenPath(store_get($$store_subs ??= {}, "$page", page).url.pathname) || isWorkoutPath(store_get($$store_subs ??= {}, "$page", page).url.pathname),
       "center-content": isGamesSubpath(store_get($$store_subs ??= {}, "$page", page).url.pathname),
       "top-centered-content": isHomePath(store_get($$store_subs ??= {}, "$page", page).url.pathname)
     })}${attr("data-page", pageKey)}><section class="content svelte-12qhfyh"><!--[-->`);

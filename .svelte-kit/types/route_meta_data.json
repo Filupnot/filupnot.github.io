@@ -29,5 +29,16 @@
 	],
 	"/ren/glass-weight-calculator": [
 		"src/routes/+layout.ts"
+	],
+	"/workout": [
+		"src/routes/workout/+layout.ts",
+		"src/routes/+layout.ts",
+		"src/routes/workout/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/workout/[type]": [
+		"src/routes/workout/[type]/+page.ts",
+		"src/routes/workout/+layout.ts",
+		"src/routes/+layout.ts"
 	]
 }

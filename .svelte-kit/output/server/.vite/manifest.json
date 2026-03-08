@@ -93,6 +93,12 @@
       "_index.js"
     ]
   },
+  "node_modules/@sveltejs/kit/src/runtime/components/svelte-5/layout.svelte": {
+    "file": "entries/fallbacks/layout.svelte.js",
+    "name": "entries/fallbacks/layout.svelte",
+    "src": "node_modules/@sveltejs/kit/src/runtime/components/svelte-5/layout.svelte",
+    "isEntry": true
+  },
   "node_modules/@sveltejs/kit/src/runtime/server/index.js": {
     "file": "index.js",
     "name": "index",
@@ -141,7 +147,7 @@
       "_context.js"
     ],
     "css": [
-      "_app/immutable/assets/_page.CbqODTZj.css"
+      "_app/immutable/assets/_page.LGntvsnb.css"
     ]
   },
   "src/routes/about/+page.svelte": {
@@ -264,5 +270,44 @@
     "css": [
       "_app/immutable/assets/_page.CxdbcJ75.css"
     ]
+  },
+  "src/routes/workout/+layout.ts": {
+    "file": "entries/pages/workout/_layout.ts.js",
+    "name": "entries/pages/workout/_layout.ts",
+    "src": "src/routes/workout/+layout.ts",
+    "isEntry": true
+  },
+  "src/routes/workout/+page.svelte": {
+    "file": "entries/pages/workout/_page.svelte.js",
+    "name": "entries/pages/workout/_page.svelte",
+    "src": "src/routes/workout/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index2.js",
+      "_server.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_page.TGnyr3Fz.css"
+    ]
+  },
+  "src/routes/workout/[type]/+page.svelte": {
+    "file": "entries/pages/workout/_type_/_page.svelte.js",
+    "name": "entries/pages/workout/_type_/_page.svelte",
+    "src": "src/routes/workout/[type]/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index2.js",
+      "_context.js",
+      "_server.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_page.rv--d-VM.css"
+    ]
+  },
+  "src/routes/workout/[type]/+page.ts": {
+    "file": "entries/pages/workout/_type_/_page.ts.js",
+    "name": "entries/pages/workout/_type_/_page.ts",
+    "src": "src/routes/workout/[type]/+page.ts",
+    "isEntry": true
   }
 }

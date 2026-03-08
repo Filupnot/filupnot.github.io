@@ -1,0 +1,1 @@
+import{f as a,a as s}from"../chunks/B_yitYQZ.js";import"../chunks/Bgt4e5cg.js";var e=a('<section class="about svelte-cwls5q"><h2>About</h2></section>');function c(o){var t=e();s(o,t)}export{c as component};

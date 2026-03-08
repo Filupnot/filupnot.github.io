@@ -1,0 +1,1 @@
+export { default as component } from "../../../../src/routes/games/pass-the-pigs/+page.svelte";

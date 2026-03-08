@@ -1,0 +1,1 @@
+export { default as component } from "../../../../src/routes/games/8-ball-pool/+page.svelte";
