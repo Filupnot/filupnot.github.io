@@ -88,6 +88,7 @@
     if (pathname.includes("/games/pass-the-pigs")) return "pass-the-pigs";
     if (isRenIndexPath(pathname)) return "ren";
     if (pathname.includes("/ren/glass-weight-calculator")) return "glass-weight-calculator";
+    if (pathname.includes("/wall-planner")) return "wall-planner";
     return "default";
   };
 
