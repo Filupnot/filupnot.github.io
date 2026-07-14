@@ -10,6 +10,10 @@
     {
       title: "Ren's Tools",
       href: "/ren"
+    },
+    {
+      title: "Wall Art Planner",
+      href: "/wall-planner"
     }
   ];
 
