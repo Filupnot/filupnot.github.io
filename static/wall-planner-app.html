@@ -67,6 +67,8 @@
   .btn-primary:hover{background:#a95d29}
   .btn-ghost{background:var(--ink-soft);color:var(--cream);border:1px solid rgba(255,255,255,.12)}
   .btn-ghost:hover{border-color:rgba(255,255,255,.28)}
+  .import-btn{display:flex;align-items:center;justify-content:center;text-align:center;cursor:pointer}
+  .import-hint{font-size:11px;color:var(--cream-dim);margin-top:9px;line-height:1.45;letter-spacing:.2px}
 
   /* Distribution controls */
   .seg{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:18px}
@@ -154,6 +156,11 @@
         <label class="photo-btn" id="photoBtn"><span class="ico"></span><span>Add photo (optional)</span><input type="file" id="newImg" accept="image/*" hidden></label>
         <button class="btn btn-primary" id="addBtn">Add to collection</button>
       </div>
+      <div class="btn-row" style="margin-top:11px">
+        <label class="btn btn-ghost import-btn" id="importBtn"><span id="importLbl">⬆ Import spreadsheet</span><input type="file" id="importFile" accept=".csv,.tsv,.txt,text/csv" hidden></label>
+        <button class="btn btn-ghost" id="clearBtn">Clear all</button>
+      </div>
+      <p class="import-hint">Columns: name, width, height — all in inches. Saved as .csv from Excel or Sheets.</p>
     </div>
 
     <div class="section">
@@ -211,9 +218,49 @@
   let P={style:'salon', gap:3, spread:0.82, tilt:2.5, jitter:0.28, seed:7};
 
   const seedColors=['#8a9a8b','#c98f6a','#6d7b94','#a8956f','#7f8a9c','#b08a7a'];
-  [['Coastal Study',24,18],['Portrait No.4',16,20],['Botanical Print',18,24]].forEach((s,i)=>{
-    pieces.push({id:uid++,name:s[0],w:s[1],h:s[2],x:0,y:0,rot:0,img:null,tint:seedColors[i]});
-  });
+  function seed(){
+    pieces=[];uid=1;
+    [['Coastal Study',24,18],['Portrait No.4',16,20],['Botanical Print',18,24]].forEach((s,i)=>{
+      pieces.push({id:uid++,name:s[0],w:s[1],h:s[2],x:0,y:0,rot:0,img:null,tint:seedColors[i]});
+    });
+  }
+
+  // ---------------- persistence (survives page refresh) ----------------
+  const STORE_KEY='salon.planner.v1';
+  let saveTimer=null;
+  function save(){
+    try{localStorage.setItem(STORE_KEY,JSON.stringify({unit,wall,showCenter,pieces,selId,uid,P}));}
+    catch(e){/* storage unavailable or over quota (e.g. many photos) — stay in-memory */}
+  }
+  function scheduleSave(){if(saveTimer)clearTimeout(saveTimer);saveTimer=setTimeout(save,250);}
+  function load(){
+    try{
+      const s=JSON.parse(localStorage.getItem(STORE_KEY));
+      if(!s||!Array.isArray(s.pieces))return false;
+      unit=s.unit==='cm'?'cm':'in';
+      if(s.wall&&typeof s.wall.w==='number'&&typeof s.wall.h==='number')wall=s.wall;
+      showCenter=s.showCenter!==false;
+      pieces=s.pieces;
+      selId=(typeof s.selId==='number')?s.selId:null;
+      uid=s.uid||(pieces.reduce((m,p)=>Math.max(m,p.id||0),0)+1);
+      if(s.P)P=Object.assign(P,s.P);
+      return true;
+    }catch(e){return false;}
+  }
+  if(!load())seed();
+
+  // Mirror all persisted state onto the sidebar controls (used after load/import/clear).
+  function syncControls(){
+    document.querySelectorAll('.unit-toggle button').forEach(x=>x.classList.toggle('active',x.dataset.unit===unit));
+    $('wallW').value=Math.round(toDisp(wall.w)*10)/10;
+    $('wallH').value=Math.round(toDisp(wall.h)*10)/10;
+    document.querySelectorAll('#styleSeg button').forEach(x=>x.classList.toggle('active',x.dataset.style===P.style));
+    $('spread').value=Math.round(P.spread*100);$('spreadVal').textContent=Math.round(P.spread*100)+'%';
+    $('gap').value=P.gap;$('gapVal').textContent=fmt(P.gap);
+    $('tilt').value=P.tilt;$('tiltVal').textContent=P.tilt+'°';
+    $('jitter').value=Math.round(P.jitter*100);$('jitterVal').textContent=Math.round(P.jitter*100)+'%';
+    $('clToggle').checked=showCenter;
+  }
 
   const $=id=>document.getElementById(id);
   const wallEl=$('wall'), wrapEl=$('wallWrap'), stageEl=$('stage'), measureEl=$('measure');
@@ -399,7 +446,7 @@
     nodeMap.forEach((rec,id)=>{if(!seen.has(id)){rec.el.remove();nodeMap.delete(id);}});
     requestAnimationFrame(()=>nodeMap.forEach(rec=>{if(rec.placing){rec.placing=false;rec.el.classList.remove('placing');}}));
 
-    renderList(); updateStatus();
+    renderList(); updateStatus(); scheduleSave();
   }
   function createNode(p){const e=el('div','piece');e.dataset.id=p.id;const rec={el:e,hasImg:null,tint:null};syncContent(rec,p);attachDrag(e,p);return rec;}
   function syncContent(rec,p){
@@ -516,6 +563,70 @@
   });
   ['newName','newW','newH'].forEach(id=>$(id).addEventListener('keydown',e=>{if(e.key==='Enter')$('addBtn').click();}));
 
+  // ---------------- spreadsheet import ----------------
+  // Parse CSV/TSV text into rows, honouring quoted fields and either delimiter.
+  function parseTable(text){
+    text=text.replace(/^\uFEFF/,'');
+    const tab=text.indexOf('\t'),comma=text.indexOf(',');
+    const delim=(tab>=0&&(comma<0||tab<comma))?'\t':',';
+    const rows=[];let field='',row=[],inQ=false;
+    for(let i=0;i<text.length;i++){
+      const c=text[i];
+      if(inQ){
+        if(c==='"'){if(text[i+1]==='"'){field+='"';i++;}else inQ=false;}
+        else field+=c;
+      }else if(c==='"')inQ=true;
+      else if(c===delim){row.push(field);field='';}
+      else if(c==='\n'||c==='\r'){
+        if(c==='\r'&&text[i+1]==='\n')i++;
+        row.push(field);field='';
+        if(row.some(x=>x.trim()!==''))rows.push(row);
+        row=[];
+      }else field+=c;
+    }
+    row.push(field);
+    if(row.some(x=>x.trim()!==''))rows.push(row);
+    return rows;
+  }
+  function importRows(rows){
+    if(!rows.length)return 0;
+    // Skip a header row if its width/height cells aren't numeric.
+    let start=0;
+    const w0=parseFloat(rows[0][1]),h0=parseFloat(rows[0][2]);
+    if(!isFinite(w0)||!isFinite(h0))start=1;
+    let added=0;
+    for(let i=start;i<rows.length;i++){
+      const r=rows[i];
+      const name=(r[0]||'').trim();
+      const w=parseFloat(r[1]),h=parseFloat(r[2]);      // inches, per the spec
+      if(!isFinite(w)||!isFinite(h)||w<=0||h<=0)continue;
+      const tint=seedColors[pieces.length%seedColors.length];
+      pieces.push({id:uid++,name:name||'Untitled',w,h,x:wall.w/2-w/2,y:centerYin()-h/2,rot:0,img:null,tint});
+      added++;
+    }
+    return added;
+  }
+  let flashTimer=null;
+  function flashImport(msg){
+    const l=$('importLbl');l.textContent=msg;
+    if(flashTimer)clearTimeout(flashTimer);
+    flashTimer=setTimeout(()=>{l.textContent='⬆ Import spreadsheet';},2600);
+  }
+  $('importFile').addEventListener('change',e=>{
+    const f=e.target.files[0];if(!f)return;
+    const r=new FileReader();
+    r.onload=ev=>{
+      const n=importRows(parseTable(String(ev.target.result)));
+      if(n>0){arrange();flashImport('✓ Added '+n+(n===1?' piece':' pieces'));}
+      else flashImport('No valid rows found');
+    };
+    r.readAsText(f);
+    e.target.value='';   // allow re-importing the same file
+  });
+  $('clearBtn').addEventListener('click',()=>{
+    if(!pieces.length||confirm('Remove all art from the wall?')){pieces=[];selId=null;arrange();}
+  });
+
   $('artList').addEventListener('click',e=>{
     const del=e.target.closest('[data-del]');
     if(del){pieces=pieces.filter(p=>String(p.id)!==del.dataset.del);if(String(selId)===del.dataset.del)selId=null;arrange();return;}
@@ -526,7 +637,7 @@
   window.addEventListener('resize',render);
 
   // init
-  $('gapVal').textContent=fmt(P.gap);
+  syncControls();
   arrange();
 })();
 </script>
