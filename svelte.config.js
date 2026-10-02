@@ -17,7 +17,7 @@ const config = {
       base
     },
     prerender: {
-      entries: ['*', '/ren', '/ren/glass-weight-calculator', '/wall-planner']
+      entries: ['*', '/ren', '/ren/glass-weight-calculator', '/wall-planner', '/hike']
     }
   }
 };

@@ -89,6 +89,7 @@
     if (isRenIndexPath(pathname)) return "ren";
     if (pathname.includes("/ren/glass-weight-calculator")) return "glass-weight-calculator";
     if (pathname.includes("/wall-planner")) return "wall-planner";
+    if (pathname.includes("/hike")) return "hike";
     return "default";
   };
 
@@ -115,7 +116,9 @@
 
 <main
   class="page"
-  class:top-content={isGamesIndexPath($page.url.pathname) || isRenPath($page.url.pathname)}
+  class:top-content={isGamesIndexPath($page.url.pathname) ||
+    isRenPath($page.url.pathname) ||
+    pageKey === "hike"}
   class:center-content={isGamesSubpath($page.url.pathname)}
   class:top-centered-content={isHomePath($page.url.pathname)}
   data-page={pageKey}
