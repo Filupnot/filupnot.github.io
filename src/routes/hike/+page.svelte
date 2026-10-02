@@ -125,13 +125,13 @@
             <span class="check" aria-hidden="true">
               <svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7" /></svg>
             </span>
-            <span class="label">{option.label}</span>
-            {#if voters.length > 0}
-              <span class="count" aria-label="{voters.length} votes">{voters.length}</span>
-            {/if}
-            {#if voters.length > 0}
-              <span class="voters">{voters.join(", ")}</span>
-            {/if}
+            <span class="text">
+              <span class="label">{option.label}</span>
+              {#if voters.length > 0}
+                <span class="voters">{voters.join(", ")}</span>
+              {/if}
+            </span>
+            <span class="count" aria-label="{voters.length} votes">{voters.length}</span>
           </button>
         </li>
       {/each}
@@ -233,20 +233,18 @@
     list-style: none;
     margin: 0;
     padding: 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
   }
 
   .option {
     width: 100%;
-    min-height: 64px;
-    display: grid;
-    grid-template-columns: auto 1fr auto;
+    min-height: 60px;
+    display: flex;
     align-items: center;
-    column-gap: 0.6rem;
-    row-gap: 0.25rem;
-    padding: 0.8rem 0.85rem;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
     border-radius: 14px;
     border: 1px solid var(--hike-border);
     background: var(--hike-surface);
@@ -269,6 +267,7 @@
   }
 
   .check {
+    flex: none;
     width: 22px;
     height: 22px;
     border-radius: 7px;
@@ -298,6 +297,14 @@
     opacity: 1;
   }
 
+  .text {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
   .label {
     font-size: 1.1rem;
     font-weight: 600;
@@ -305,12 +312,13 @@
   }
 
   .count {
-    min-width: 1.6rem;
-    height: 1.6rem;
+    flex: none;
+    min-width: 2rem;
+    height: 2rem;
     padding: 0 0.4rem;
     border-radius: 999px;
     background: var(--hike-border);
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     font-weight: 700;
     display: inline-flex;
     align-items: center;
@@ -318,7 +326,6 @@
   }
 
   .voters {
-    grid-column: 1 / -1;
     font-size: 0.8rem;
     line-height: 1.3;
     color: var(--hike-muted);
