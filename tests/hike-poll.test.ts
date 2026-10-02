@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { HIKE_OPTIONS, sameName, weekendOptions } from "../src/lib/hike-poll";
 
 describe("hike poll", () => {
-  it("lists the remaining October 2026 weekend days", () => {
+  it("lists the remaining October 2026 weekend days plus 11/1", () => {
     expect(HIKE_OPTIONS.map((option) => option.label)).toEqual([
       "Sat 10/3",
       "Sun 10/4",
@@ -12,7 +12,8 @@ describe("hike poll", () => {
       "Sun 10/18",
       "Sat 10/24",
       "Sun 10/25",
-      "Sat 10/31"
+      "Sat 10/31",
+      "Sun 11/1"
     ]);
     expect(HIKE_OPTIONS[0].date).toBe("2026-10-03");
   });

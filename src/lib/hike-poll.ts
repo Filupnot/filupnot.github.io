@@ -14,10 +14,14 @@ export type HikeOption = {
 
 const pad = (value: number) => String(value).padStart(2, "0");
 
-export const weekendOptions = (year: number, month: number, fromDay = 1): HikeOption[] => {
+export const weekendOptions = (
+  year: number,
+  month: number,
+  fromDay = 1,
+  toDay = new Date(year, month, 0).getDate()
+): HikeOption[] => {
   const options: HikeOption[] = [];
-  const daysInMonth = new Date(year, month, 0).getDate();
-  for (let day = fromDay; day <= daysInMonth; day += 1) {
+  for (let day = fromDay; day <= toDay; day += 1) {
     const weekday = new Date(year, month - 1, day).getDay();
     if (weekday !== 0 && weekday !== 6) continue;
     options.push({
@@ -28,7 +32,7 @@ export const weekendOptions = (year: number, month: number, fromDay = 1): HikeOp
   return options;
 };
 
-export const HIKE_OPTIONS = weekendOptions(2026, 10, 3);
+export const HIKE_OPTIONS = [...weekendOptions(2026, 10, 3), ...weekendOptions(2026, 11, 1, 1)];
 
 const parseVotes = async (response: Response): Promise<HikeVote[]> => {
   if (!response.ok) throw new Error(`Request failed (${response.status})`);
